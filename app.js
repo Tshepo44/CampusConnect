@@ -165,12 +165,17 @@ window.onload = () => {
     loggedInStudent = student;
     document.getElementById("login").classList.add("hidden");
     document.querySelectorAll("section.hidden").forEach(s => s.classList.remove("hidden"));
+    document.getElementById("logoutBtn").classList.remove("hidden");
+  } else {
+    document.getElementById("logoutBtn").classList.add("hidden");
   }
   displayTutors();
   displayItems();
   displayGroups();
   displayCounsellors();
 };
+
+
 
 
 
