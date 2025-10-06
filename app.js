@@ -1,3 +1,11 @@
+function logout() {
+  localStorage.removeItem("loggedInStudent");
+  loggedInStudent = null;
+  document.getElementById("login").classList.remove("hidden");
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  document.getElementById("logoutBtn").classList.add("hidden");
+}
+
 // ---------------------- PREDEFINED STUDENTS ----------------------
 if (!localStorage.getItem("students")) {
   const students = [
@@ -163,5 +171,6 @@ window.onload = () => {
   displayGroups();
   displayCounsellors();
 };
+
 
 
