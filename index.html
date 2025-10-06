@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Connect</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Campus Connect</h1>
+    <nav>
+      <a href="#tutors">Tutors</a>
+      <a href="#marketplace">Marketplace</a>
+      <a href="#study-groups">Study Groups</a>
+      <a href="#counselling">Counselling</a>
+    </nav>
+  </header>
+
+  <section id="login">
+    <h2>Student Login</h2>
+    <input id="studentNumber" placeholder="Student Number" />
+    <input id="password" type="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+  </section>
+
+  <section id="tutors" class="hidden">
+    <h2>Tutors</h2>
+    <div id="tutorList"></div>
+    <button onclick="showAddTutor()">Add Tutor (Admin)</button>
+    <div id="addTutorForm" class="hidden">
+      <input id="tutorName" placeholder="Tutor Name" />
+      <input id="tutorModule" placeholder="Module" />
+      <button onclick="addTutor()">Save Tutor</button>
+    </div>
+  </section>
+
+  <section id="marketplace" class="hidden">
+    <h2>Marketplace</h2>
+    <div id="itemList"></div>
+    <button onclick="showAddItem()">Add Item</button>
+    <div id="addItemForm" class="hidden">
+      <input id="itemName" placeholder="Item Name" />
+      <input id="itemPrice" placeholder="Price" />
+      <input id="itemSeller" placeholder="Seller" />
+      <button onclick="addItem()">Save Item</button>
+    </div>
+  </section>
+
+  <section id="study-groups" class="hidden">
+    <h2>Study Groups</h2>
+    <div id="groupList"></div>
+    <button onclick="showAddGroup()">Create Group</button>
+    <div id="addGroupForm" class="hidden">
+      <input id="groupSubject" placeholder="Subject" />
+      <input id="groupTime" placeholder="Time" />
+      <input id="groupLocation" placeholder="Location" />
+      <input id="groupOrganizer" placeholder="Organizer" />
+      <button onclick="addGroup()">Save Group</button>
+    </div>
+  </section>
+
+  <section id="counselling" class="hidden">
+    <h2>Counselling</h2>
+    <div id="counsellorList"></div>
+    <button onclick="showAddCounsellor()">Add Counsellor (Admin)</button>
+    <div id="addCounsellorForm" class="hidden">
+      <input id="counsellorName" placeholder="Name" />
+      <input id="counsellorHeadline" placeholder="Headline" />
+      <input id="counsellorAvailability" placeholder="Availability" />
+      <button onclick="addCounsellor()">Save Counsellor</button>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
