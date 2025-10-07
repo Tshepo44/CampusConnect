@@ -1,80 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campus Connect</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
 <body>
   <header>
     <h1>Campus Connect</h1>
-    <button id="logoutBtn" onclick="logout()" class="hidden">Logout</button>
-
     <nav>
-      <a href="#tutors">Tutors</a>
-      <a href="#marketplace">Marketplace</a>
-      <a href="#study-groups">Study Groups</a>
-      <a href="#counselling">Counselling</a>
+      <button onclick="showSection('home')">Home</button>
+      <button onclick="showSection('tutors')">Tutors</button>
+      <button onclick="showSection('marketplace')">Marketplace</button>
+      <button onclick="showSection('groups')">Study Groups</button>
+      <button onclick="showSection('counselling')">Counselling</button>
+      <button id="logoutBtn" onclick="logout()">Logout</button>
     </nav>
   </header>
 
+  <!-- Login Section -->
   <section id="login">
     <h2>Student Login</h2>
-    <input id="studentNumber" placeholder="Student Number" />
-    <input id="password" type="password" placeholder="Password" />
+    <input id="studentNumber" placeholder="Student Number">
+    <input id="password" type="password" placeholder="Password">
     <button onclick="login()">Login</button>
   </section>
 
+  <!-- Home Section -->
+  <section id="home" class="hidden">
+    <h2>Welcome to Campus Connect</h2>
+    <p>Your all-in-one student portal for learning, trading, and connecting!</p>
+  </section>
+
+  <!-- Tutors Section -->
   <section id="tutors" class="hidden">
     <h2>Tutors</h2>
-    <div id="tutorList"></div>
-    <button onclick="showAddTutor()">Add Tutor (Admin)</button>
+    <button onclick="showAddTutor()">Add Tutor</button>
     <div id="addTutorForm" class="hidden">
-      <input id="tutorName" placeholder="Tutor Name" />
-      <input id="tutorModule" placeholder="Module" />
+      <input id="tutorName" placeholder="Tutor Name">
+      <input id="tutorModule" placeholder="Module">
       <button onclick="addTutor()">Save Tutor</button>
     </div>
+    <div id="tutorList"></div>
   </section>
 
+  <!-- Marketplace Section -->
   <section id="marketplace" class="hidden">
     <h2>Marketplace</h2>
-    <div id="itemList"></div>
     <button onclick="showAddItem()">Add Item</button>
     <div id="addItemForm" class="hidden">
-      <input id="itemName" placeholder="Item Name" />
-      <input id="itemPrice" placeholder="Price" />
-      <input id="itemSeller" placeholder="Seller" />
+      <input id="itemName" placeholder="Item Name">
+      <input id="itemPrice" placeholder="Price">
+      <input id="itemSeller" placeholder="Seller">
       <button onclick="addItem()">Save Item</button>
     </div>
+    <div id="itemList"></div>
   </section>
 
-  <section id="study-groups" class="hidden">
+  <!-- Study Groups Section -->
+  <section id="groups" class="hidden">
     <h2>Study Groups</h2>
-    <div id="groupList"></div>
-    <button onclick="showAddGroup()">Create Group</button>
+    <button onclick="showAddGroup()">Add Group</button>
     <div id="addGroupForm" class="hidden">
-      <input id="groupSubject" placeholder="Subject" />
-      <input id="groupTime" placeholder="Time" />
-      <input id="groupLocation" placeholder="Location" />
-      <input id="groupOrganizer" placeholder="Organizer" />
+      <input id="groupSubject" placeholder="Subject">
+      <input id="groupTime" placeholder="Time">
+      <input id="groupLocation" placeholder="Location">
+      <input id="groupOrganizer" placeholder="Organizer">
       <button onclick="addGroup()">Save Group</button>
     </div>
+    <div id="groupList"></div>
   </section>
 
+  <!-- Counselling Section -->
   <section id="counselling" class="hidden">
     <h2>Counselling</h2>
-    <div id="counsellorList"></div>
-    <button onclick="showAddCounsellor()">Add Counsellor (Admin)</button>
+    <button onclick="showAddCounsellor()">Add Counsellor</button>
     <div id="addCounsellorForm" class="hidden">
-      <input id="counsellorName" placeholder="Name" />
-      <input id="counsellorHeadline" placeholder="Headline" />
-      <input id="counsellorAvailability" placeholder="Availability" />
+      <input id="counsellorName" placeholder="Name">
+      <input id="counsellorHeadline" placeholder="Headline">
+      <input id="counsellorAvailability" placeholder="Availability">
       <button onclick="addCounsellor()">Save Counsellor</button>
     </div>
+    <div id="counsellorList"></div>
   </section>
 
   <script src="app.js"></script>
 </body>
-</html>
+
+
 
