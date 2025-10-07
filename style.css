@@ -1,76 +1,62 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f0f4f8;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Connect</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Campus Connect</h1>
+  <nav>
+    <button id="logoutBtn" onclick="logout()" class="hidden">Logout</button>
+  </nav>
+</header>
 
-header {
-  background: #0077cc;
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-}
+<!-- Welcome/Login -->
+<section id="welcome">
+  <h2>Welcome to Campus Connect</h2>
+  <p>Your all-in-one student portal for learning, trading, and connecting!</p>
 
-nav button {
-  margin: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-  background: #fff;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-}
+  <h3>Student Login</h3>
+  <input id="studentNumber" placeholder="Student Number">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login('student')">Login as Student</button>
 
-nav button:hover {
-  background: #e0e0e0;
-}
+  <h3>Admin Login</h3>
+  <input id="adminUsername" placeholder="Admin Username">
+  <input id="adminPassword" type="password" placeholder="Password">
+  <button onclick="login('admin')">Login as Admin</button>
+</section>
 
-h2 {
-  color: #0077cc;
-}
+<!-- Student Dashboard -->
+<section id="studentDashboard" class="hidden">
+  <h2>Student Dashboard</h2>
+  <p>Select a service:</p>
+  <button onclick="showStudentService('tutors')">Tutors</button>
+  <button onclick="showStudentService('marketplace')">Marketplace</button>
+  <button onclick="showStudentService('groups')">Study Groups</button>
+  <button onclick="showStudentService('counselling')">Counselling</button>
+  <div id="studentServiceContent"></div>
+</section>
 
-section {
-  padding: 20px;
-  margin: 10px auto;
-  width: 90%;
-  max-width: 800px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+<!-- Admin Dashboard -->
+<section id="adminDashboard" class="hidden">
+  <h2>Admin Dashboard</h2>
+  <p>Select a service:</p>
+  <button onclick="showAdminService('tutors')">Tutors</button>
+  <button onclick="showAdminService('marketplace')">Marketplace</button>
+  <button onclick="showAdminService('groups')">Study Groups</button>
+  <button onclick="showAdminService('counselling')">Counselling</button>
+  <div id="adminServiceContent"></div>
+</section>
 
-.hidden {
-  display: none;
-}
+<script src="app.js"></script>
+</body>
+</html>
 
-input, select, textarea {
-  display: block;
-  width: 90%;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
 
-button {
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: none;
-  background: #0077cc;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 5px 0;
-}
-
-button:hover {
-  background: #005fa3;
-}
-
-#studentServiceContent, #adminServiceContent {
-  margin-top: 20px;
-}
 
 
 
