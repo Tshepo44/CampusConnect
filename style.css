@@ -1,24 +1,140 @@
+/* ---------------------- GENERAL ---------------------- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+h1, h2, h3 {
+  color: #2c3e50;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+  padding: 8px 12px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+input, select, textarea {
+  padding: 8px;
+  margin: 5px 0;
+  width: 95%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .hidden {
   display: none;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
+/* ---------------------- HEADER & NAV ---------------------- */
+header {
+  background-color: #34495e;
+  color: white;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-header {
-  margin-bottom: 20px;
+nav {
+  margin-top: 10px;
 }
 
 nav button {
-  margin-right: 10px;
-  padding: 5px 10px;
+  margin: 0 5px;
 }
 
+/* ---------------------- SECTIONS ---------------------- */
 section {
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
+  background-color: white;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 900px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+section input, section select, section textarea {
+  display: block;
+}
+
+#adminContent, #tutorList, #itemList, #groupList, #counsellorList, #tutorRequests {
+  margin-top: 15px;
+}
+
+div {
+  margin-bottom: 10px;
+}
+
+/* ---------------------- LOGIN ---------------------- */
+#login {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ecf0f1;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ---------------------- TEXTAREAS ---------------------- */
+textarea {
+  width: 95%;
+  min-height: 60px;
+  resize: vertical;
+}
+
+/* ---------------------- ALERTS ---------------------- */
+.alert {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.alert-success {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.alert-error {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* ---------------------- LOGOUT BUTTON ---------------------- */
+#logoutBtn, #logoutBtn2 {
+  background-color: #e67e22;
+}
+
+#logoutBtn:hover, #logoutBtn2:hover {
+  background-color: #d35400;
+}
+
+/* ---------------------- RESPONSIVE ---------------------- */
+@media (max-width: 600px) {
+  nav button {
+    display: block;
+    margin: 5px 0;
+  }
+
+  section {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+}
+
+
 
