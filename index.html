@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
   <header>
     <h1>Campus Connect</h1>
@@ -77,22 +85,19 @@
     <div id="counsellorList"></div>
   </section>
 
-
-    <!-- Admin Dashboard Section -->
+  <!-- Admin Content Section -->
   <section id="adminDashboard" class="hidden">
     <h2>Admin Dashboard</h2>
-    <p>Welcome, Admin! Manage system data below.</p>
-
-    <div class="admin-actions">
-      <button onclick="showRegisteredStudents()">View Registered Students</button>
-      <button onclick="clearAllData()">Clear All Data</button>
-    </div>
-
+    <button onclick="showRegisteredStudents()">View Registered Students</button>
+    <button onclick="clearAllData()">Clear All Data</button>
     <div id="adminContent"></div>
   </section>
 
   <script src="app.js"></script>
 </body>
+</html>
+
+
 
 
 
