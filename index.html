@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Campus Connect</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Connect</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Campus Connect</h1>
-    <nav>
-      <button id="logoutBtn" onclick="logout()" class="hidden">Logout</button>
-    </nav>
-  </header>
+<header>
+  <h1>Campus Connect</h1>
+  <nav>
+    <button id="logoutBtn" onclick="logout()" class="hidden">Logout</button>
+  </nav>
+</header>
 
-  <!-- Welcome & Login Section -->
-  <section id="welcome">
-    <h2>Welcome to Campus Connect</h2>
-    <p>Your all-in-one student portal for learning, trading, and connecting!</p>
-    <h3>Student Login</h3>
-    <input id="studentNumber" placeholder="Student Number">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login('student')">Login as Student</button>
+<!-- Welcome/Login -->
+<section id="welcome">
+  <h2>Welcome to Campus Connect</h2>
+  <p>Your all-in-one student portal for learning, trading, and connecting!</p>
 
-    <h3>Admin Login</h3>
-    <input id="adminUsername" placeholder="Admin Username">
-    <input id="adminPassword" type="password" placeholder="Password">
-    <button onclick="login('admin')">Login as Admin</button>
-  </section>
+  <h3>Student Login</h3>
+  <input id="studentNumber" placeholder="Student Number">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login('student')">Login as Student</button>
 
-  <!-- Student Dashboard -->
-  <section id="studentDashboard" class="hidden">
-    <h2>Student Dashboard</h2>
-    <p>Select a service:</p>
-    <button onclick="showStudentService('tutors')">Tutors</button>
-    <button onclick="showStudentService('marketplace')">Marketplace</button>
-    <button onclick="showStudentService('groups')">Study Groups</button>
-    <button onclick="showStudentService('counselling')">Counselling</button>
+  <h3>Admin Login</h3>
+  <input id="adminUsername" placeholder="Admin Username">
+  <input id="adminPassword" type="password" placeholder="Password">
+  <button onclick="login('admin')">Login as Admin</button>
+</section>
 
-    <div id="studentServiceContent"></div>
-  </section>
+<!-- Student Dashboard -->
+<section id="studentDashboard" class="hidden">
+  <h2>Student Dashboard</h2>
+  <p>Select a service:</p>
+  <button onclick="showStudentService('tutors')">Tutors</button>
+  <button onclick="showStudentService('marketplace')">Marketplace</button>
+  <button onclick="showStudentService('groups')">Study Groups</button>
+  <button onclick="showStudentService('counselling')">Counselling</button>
+  <div id="studentServiceContent"></div>
+</section>
 
-  <!-- Admin Dashboard -->
-  <section id="adminDashboard" class="hidden">
-    <h2>Admin Dashboard</h2>
-    <p>Select a service:</p>
-    <button onclick="showAdminService('tutors')">Tutors</button>
-    <button onclick="showAdminService('marketplace')">Marketplace</button>
-    <button onclick="showAdminService('groups')">Study Groups</button>
-    <button onclick="showAdminService('counselling')">Counselling</button>
+<!-- Admin Dashboard -->
+<section id="adminDashboard" class="hidden">
+  <h2>Admin Dashboard</h2>
+  <p>Select a service:</p>
+  <button onclick="showAdminService('tutors')">Tutors</button>
+  <button onclick="showAdminService('marketplace')">Marketplace</button>
+  <button onclick="showAdminService('groups')">Study Groups</button>
+  <button onclick="showAdminService('counselling')">Counselling</button>
+  <div id="adminServiceContent"></div>
+</section>
 
-    <div id="adminServiceContent"></div>
-  </section>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
+
+
 
 
 
