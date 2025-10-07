@@ -12,17 +12,32 @@ if (!localStorage.getItem("students")) {
     { studentNumber: "2025001", password: "pass1" },
     { studentNumber: "2025002", password: "pass2" },
     { studentNumber: "2025003", password: "pass3" }
+    const adminAccount = { username: "admin", password: "admin123" };
+
   ];
   localStorage.setItem("students", JSON.stringify(students));
 }
 
 let loggedInStudent = null;
+const adminAccount = { username: "admin", password: "admin123" };
+
 
 // ---------------------- LOGIN ----------------------
 function login() {
   const studentNumber = document.getElementById("studentNumber").value;
   const password = document.getElementById("password").value;
 
+  // Check if admin is logging in
+  if (studentNumber === adminAccount.username && password === adminAccount.password) {
+    alert("Welcome, Admin!");
+    localStorage.setItem("isAdmin", true);
+    showAdminPanel();
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("logoutBtn").classList.remove("hidden");
+    return;
+  }
+
+  // Check if normal student is logging in
   const students = JSON.parse(localStorage.getItem("students")) || [];
   const student = students.find(
     s => s.studentNumber === studentNumber && s.password === password
@@ -33,6 +48,7 @@ function login() {
     localStorage.setItem("loggedInStudent", JSON.stringify(student));
     document.getElementById("login").classList.add("hidden");
     document.querySelectorAll("section.hidden").forEach(s => s.classList.remove("hidden"));
+    document.getElementById("logoutBtn").classList.remove("hidden");
     displayTutors();
     displayItems();
     displayGroups();
@@ -41,6 +57,7 @@ function login() {
     alert("Incorrect student number or password!");
   }
 }
+
 
 // ---------------------- TUTORS ----------------------
 function addTutor() {
@@ -174,6 +191,61 @@ window.onload = () => {
   displayGroups();
   displayCounsellors();
 };
+
+// ---------------------- ADMIN PANEL ----------------------
+function showAdminPanel() {
+  const adminPanel = document.createElement("div");
+  adminPanel.innerHTML = `
+    <h2>Admin Dashboard</h2>
+    <button onclick="adminAddTutor()">Add Tutor</button>
+    <button onclick="adminAddItem()">Add Marketplace Item</button>
+    <button onclick="adminAddGroup()">Add Study Group</button>
+    <button onclick="adminAddCounsellor()">Add Counsellor</button>
+    <div id="adminOutput"></div>
+  `;
+  document.body.innerHTML = "";
+  document.body.appendChild(adminPanel);
+}
+
+function adminAddTutor() {
+  const name = prompt("Enter tutor name:");
+  const module = prompt("Enter tutor module:");
+  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+  tutors.push({ name, module });
+  localStorage.setItem("tutors", JSON.stringify(tutors));
+  alert("Tutor added successfully!");
+}
+
+function adminAddItem() {
+  const name = prompt("Enter item name:");
+  const price = prompt("Enter item price:");
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  items.push({ name, price });
+  localStorage.setItem("items", JSON.stringify(items));
+  alert("Item added successfully!");
+}
+
+function adminAddGroup() {
+  const subject = prompt("Enter study group subject:");
+  const time = prompt("Enter group time:");
+  const location = prompt("Enter group location:");
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  groups.push({ subject, time, location });
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("Study group added successfully!");
+}
+
+function adminAddCounsellor() {
+  const name = prompt("Enter counsellor name:");
+  const headline = prompt("Enter counsellor headline:");
+  const availability = prompt("Enter availability:");
+  const counsellors = JSON.parse(localStorage.getItem("counsellors")) || [];
+  counsellors.push({ name, headline, availability });
+  localStorage.setItem("counsellors", JSON.stringify(counsellors));
+  alert("Counsellor added successfully!");
+}
+
+
 
 
 
