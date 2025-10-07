@@ -245,6 +245,16 @@ function adminAddCounsellor() {
   alert("Counsellor added successfully!");
 }
 
+// Function to show one section and hide the others
+function showSection(sectionId) {
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  const selected = document.getElementById(sectionId);
+  if (selected) selected.classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+}
+
+
+
 
 
 
