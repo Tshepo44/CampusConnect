@@ -226,6 +226,80 @@ function showSection(sectionId) {
   document.getElementById("logoutBtn").classList.remove("hidden");
 }
 
+// ---------------------- ADMIN PANEL ----------------------
+function showAdminPanel() {
+  const adminPanel = document.createElement("div");
+  adminPanel.innerHTML = `
+    <h2>Admin Dashboard</h2>
+
+    <h3>Manage Students</h3>
+    <button onclick="showRegisteredStudents()">View Registered Students</button>
+    <button onclick="clearAllData()">Clear All Students</button>
+    <div id="adminStudentList"></div>
+
+    <h3>Manage Tutors</h3>
+    <button onclick="adminAddTutor()">Add Tutor</button>
+    <button onclick="adminDeleteTutor()">Delete All Tutors</button>
+
+    <h3>Manage Marketplace Items</h3>
+    <button onclick="adminAddItem()">Add Item</button>
+    <button onclick="adminDeleteItems()">Delete All Items</button>
+
+    <h3>Manage Study Groups</h3>
+    <button onclick="adminAddGroup()">Add Study Group</button>
+    <button onclick="adminDeleteGroups()">Delete All Groups</button>
+
+    <h3>Manage Counsellors</h3>
+    <button onclick="adminAddCounsellor()">Add Counsellor</button>
+    <button onclick="adminDeleteCounsellors()">Delete All Counsellors</button>
+  `;
+  document.body.innerHTML = "";
+  document.body.appendChild(adminPanel);
+}
+
+// ---------------------- ADMIN DELETE FUNCTIONS ----------------------
+function adminDeleteTutor() {
+  if(confirm("Delete all tutors?")) {
+    localStorage.removeItem("tutors");
+    alert("All tutors deleted!");
+  }
+}
+
+function adminDeleteItems() {
+  if(confirm("Delete all marketplace items?")) {
+    localStorage.removeItem("items");
+    alert("All items deleted!");
+  }
+}
+
+function adminDeleteGroups() {
+  if(confirm("Delete all study groups?")) {
+    localStorage.removeItem("groups");
+    alert("All study groups deleted!");
+  }
+}
+
+function adminDeleteCounsellors() {
+  if(confirm("Delete all counsellors?")) {
+    localStorage.removeItem("counsellors");
+    alert("All counsellors deleted!");
+  }
+}
+
+// Update showRegisteredStudents to display inside adminStudentList
+function showRegisteredStudents() {
+  const students = JSON.parse(localStorage.getItem("students")) || [];
+  const content = students.length
+    ? students.map(s => `<li>${s.studentNumber}</li>`).join("")
+    : "<p>No registered students yet.</p>";
+
+  document.getElementById("adminStudentList").innerHTML = `
+    <ul>${content}</ul>
+  `;
+}
+
+
+
 
 
 
