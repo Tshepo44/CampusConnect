@@ -226,6 +226,31 @@ function showSection(sectionId) {
   document.getElementById("logoutBtn").classList.remove("hidden");
 }
 
+// ---------------------- ADMIN: ADD STUDENT ----------------------
+function adminAddStudent() {
+  const studentNumber = prompt("Enter new student number:");
+  const password = prompt("Enter password for this student:");
+
+  if (!studentNumber || !password) {
+    alert("❌ Student number and password are required!");
+    return;
+  }
+
+  const students = JSON.parse(localStorage.getItem("students")) || [];
+
+  // Check if student number already exists
+  if (students.some(s => s.studentNumber === studentNumber)) {
+    alert("❌ This student number already exists!");
+    return;
+  }
+
+  students.push({ studentNumber, password });
+  localStorage.setItem("students", JSON.stringify(students));
+  alert("✅ Student added successfully!");
+  showRegisteredStudents(); // Refresh the list
+}
+
+
 
 
 
