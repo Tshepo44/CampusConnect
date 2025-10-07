@@ -1,3 +1,4 @@
+// ---------------------- LOGOUT ----------------------
 function logout() {
   localStorage.removeItem("loggedInStudent");
   loggedInStudent = null;
@@ -12,32 +13,32 @@ if (!localStorage.getItem("students")) {
     { studentNumber: "2025001", password: "pass1" },
     { studentNumber: "2025002", password: "pass2" },
     { studentNumber: "2025003", password: "pass3" }
-    const adminAccount = { username: "admin", password: "admin123" };
-
   ];
   localStorage.setItem("students", JSON.stringify(students));
 }
 
-let loggedInStudent = null;
+// ---------------------- ADMIN ACCOUNT ----------------------
 const adminAccount = { username: "admin", password: "admin123" };
 
+let loggedInStudent = null;
 
 // ---------------------- LOGIN ----------------------
 function login() {
-  const studentNumber = document.getElementById("studentNumber").value;
-  const password = document.getElementById("password").value;
+  const studentNumber = document.getElementById("studentNumber").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-  // Check if admin is logging in
+  // --- ADMIN LOGIN ---
   if (studentNumber === adminAccount.username && password === adminAccount.password) {
-    alert("Welcome, Admin!");
-    localStorage.setItem("isAdmin", true);
-    showAdminPanel();
+    loggedInStudent = { studentNumber: "Admin", role: "admin" };
+    localStorage.setItem("loggedInStudent", JSON.stringify(loggedInStudent));
     document.getElementById("login").classList.add("hidden");
     document.getElementById("logoutBtn").classList.remove("hidden");
+    showAdminPanel();
+    alert("✅ Logged in as Admin!");
     return;
   }
 
-  // Check if normal student is logging in
+  // --- STUDENT LOGIN ---
   const students = JSON.parse(localStorage.getItem("students")) || [];
   const student = students.find(
     s => s.studentNumber === studentNumber && s.password === password
@@ -54,10 +55,9 @@ function login() {
     displayGroups();
     displayCounsellors();
   } else {
-    alert("Incorrect student number or password!");
+    alert("❌ Incorrect student number or password!");
   }
 }
-
 
 // ---------------------- TUTORS ----------------------
 function addTutor() {
@@ -244,6 +244,8 @@ function adminAddCounsellor() {
   localStorage.setItem("counsellors", JSON.stringify(counsellors));
   alert("Counsellor added successfully!");
 }
+
+
 
 
 
