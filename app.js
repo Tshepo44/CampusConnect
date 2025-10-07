@@ -253,6 +253,28 @@ function showSection(sectionId) {
   document.getElementById("logoutBtn").classList.remove("hidden");
 }
 
+// ---------------------- ADMIN DASHBOARD ----------------------
+function showRegisteredStudents() {
+  const students = JSON.parse(localStorage.getItem("students")) || [];
+  const content = students.length
+    ? students.map(s => `<li>${s.studentNumber}</li>`).join("")
+    : "<p>No registered students yet.</p>";
+
+  document.getElementById("adminContent").innerHTML = `
+    <h3>Registered Students</h3>
+    <ul>${content}</ul>
+  `;
+}
+
+function clearAllData() {
+  if (confirm("Are you sure you want to delete all student data?")) {
+    localStorage.removeItem("students");
+    localStorage.removeItem("loggedInStudent");
+    alert("All data cleared!");
+    showSection("login");
+  }
+}
+
 
 
 
