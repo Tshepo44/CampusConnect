@@ -15,45 +15,75 @@
       <button onclick="showSection('marketplace')">Marketplace</button>
       <button onclick="showSection('groups')">Study Groups</button>
       <button onclick="showSection('counselling')">Counselling</button>
+      <button onclick="showSection('adminDashboard')">Admin Dashboard</button>
       <button id="logoutBtn" onclick="logout()">Logout</button>
     </nav>
   </header>
 
-  <!-- Login Section -->
-  <section id="login">
-    <h2>Student Login</h2>
-    <input id="studentNumber" placeholder="Student Number">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </section>
-
-  <!-- Home Section -->
-  <section id="home" class="hidden">
+  <!-- Welcome/Login Section -->
+  <section id="home">
     <h2>Welcome to Campus Connect</h2>
     <p>Your all-in-one student portal for learning, trading, and connecting!</p>
+    <div>
+      <h3>Student Login</h3>
+      <input id="studentNumber" placeholder="Student Number">
+      <input id="password" type="password" placeholder="Password">
+      <button onclick="login('student')">Login as Student</button>
+    </div>
+    <div>
+      <h3>Admin Login</h3>
+      <input id="adminUsername" placeholder="Username">
+      <input id="adminPassword" type="password" placeholder="Password">
+      <button onclick="login('admin')">Login as Admin</button>
+    </div>
   </section>
 
   <!-- Tutors Section -->
   <section id="tutors" class="hidden">
     <h2>Tutors</h2>
-    <button onclick="showAddTutor()">Add Tutor</button>
+    <div id="tutorStudentView">
+      <button onclick="studentTutorRequest()">Request Tutor Help</button>
+    </div>
+    <div id="tutorAdminView">
+      <button onclick="showAddTutor()">Add Tutor</button>
+    </div>
     <div id="addTutorForm" class="hidden">
-      <input id="tutorName" placeholder="Tutor Name">
+      <input id="tutorName" placeholder="Name">
+      <input id="tutorCampus" placeholder="Campus">
+      <input id="tutorCourse" placeholder="Course">
       <input id="tutorModule" placeholder="Module">
       <button onclick="addTutor()">Save Tutor</button>
     </div>
     <div id="tutorList"></div>
+    <div id="tutorRequests"></div>
   </section>
 
   <!-- Marketplace Section -->
   <section id="marketplace" class="hidden">
     <h2>Marketplace</h2>
-    <button onclick="showAddItem()">Add Item</button>
-    <div id="addItemForm" class="hidden">
+    <div id="marketplaceStudentView">
+      <button onclick="marketplaceAction('sell')">Sell Item</button>
+      <button onclick="marketplaceAction('buy')">Buy Item</button>
+    </div>
+    <div id="marketplaceAdminView">
+      <button onclick="displayAllItemsAdmin()">View All Items</button>
+    </div>
+    <div id="marketplaceForm" class="hidden">
       <input id="itemName" placeholder="Item Name">
+      <select id="itemType">
+        <option value="Study Material">Study Material</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Musical Instruments">Musical Instruments</option>
+        <option value="Artwork">Artwork</option>
+        <option value="Craft">Craft</option>
+      </select>
       <input id="itemPrice" placeholder="Price">
-      <input id="itemSeller" placeholder="Seller">
-      <button onclick="addItem()">Save Item</button>
+      <input id="itemLocation" placeholder="Location">
+      <input id="itemContact" placeholder="Email/Cell">
+      <input type="file" id="itemPhotos" multiple accept="image/*">
+      <button onclick="addItem()">Post Item</button>
     </div>
     <div id="itemList"></div>
   </section>
@@ -61,13 +91,20 @@
   <!-- Study Groups Section -->
   <section id="groups" class="hidden">
     <h2>Study Groups</h2>
-    <button onclick="showAddGroup()">Add Group</button>
-    <div id="addGroupForm" class="hidden">
-      <input id="groupSubject" placeholder="Subject">
-      <input id="groupTime" placeholder="Time">
-      <input id="groupLocation" placeholder="Location">
-      <input id="groupOrganizer" placeholder="Organizer">
-      <button onclick="addGroup()">Save Group</button>
+    <div id="groupStudentView">
+      <button onclick="studyGroupAction('create')">Create Study Group</button>
+      <button onclick="studyGroupAction('search')">Look for Study Group</button>
+    </div>
+    <div id="groupAdminView">
+      <button onclick="displayAllGroupsAdmin()">View All Groups</button>
+    </div>
+    <div id="groupForm" class="hidden">
+      <input id="groupCourse" placeholder="Course">
+      <input id="groupModule" placeholder="Module">
+      <input id="groupOrganizerName" placeholder="Organizer Name">
+      <input id="groupCampus" placeholder="Campus">
+      <input id="groupContact" placeholder="Cell/Email">
+      <button onclick="addGroup()">Post Group</button>
     </div>
     <div id="groupList"></div>
   </section>
@@ -75,29 +112,49 @@
   <!-- Counselling Section -->
   <section id="counselling" class="hidden">
     <h2>Counselling</h2>
-    <button onclick="showAddCounsellor()">Add Counsellor</button>
-    <div id="addCounsellorForm" class="hidden">
-      <input id="counsellorName" placeholder="Name">
-      <input id="counsellorHeadline" placeholder="Headline">
-      <input id="counsellorAvailability" placeholder="Availability">
-      <button onclick="addCounsellor()">Save Counsellor</button>
+    <div id="counsellingStudentView">
+      <button onclick="counsellingAction()">Request Counselling</button>
     </div>
-    <div id="counsellorList"></div>
+    <div id="counsellingAdminView">
+      <button onclick="displayAllCounsellingAdmin()">View Counselling Requests</button>
+    </div>
+    <div id="counsellingForm" class="hidden">
+      <input id="counsellorCampus" placeholder="Campus">
+      <select id="counsellorIssue">
+        <option value="Mental Health">Mental Health</option>
+        <option value="Relationship Issues">Relationship Issues</option>
+        <option value="Academic Struggles">Academic Struggles</option>
+        <option value="Career Development">Career Development</option>
+        <option value="Personal Growth">Personal Growth</option>
+        <option value="Campus Life Adjustments">Campus Life Adjustments</option>
+        <option value="Grief/Loss">Grief/Loss</option>
+        <option value="Substance Abuse/Addiction">Substance Abuse/Addiction</option>
+      </select>
+      <select id="counsellorSessionType">
+        <option value="Online">Online</option>
+        <option value="In-person">In-person</option>
+      </select>
+      <button onclick="requestCounselling()">Send Request</button>
+    </div>
+    <div id="counsellingList"></div>
   </section>
 
-  <!-- Admin Content Section -->
+  <!-- Admin Dashboard Section -->
   <section id="adminDashboard" class="hidden">
     <h2>Admin Dashboard</h2>
-    <button onclick="showRegisteredStudents()">View Registered Students</button>
-    <button onclick="clearAllData()">Clear All Data</button>
-    <button onclick="adminAddStudent()">Add Student</button>
-
+    <button onclick="displayTutorRequestsAdmin()">Tutor Requests</button>
+    <button onclick="displayAllItemsAdmin()">Marketplace Posts</button>
+    <button onclick="displayAllGroupsAdmin()">Study Groups</button>
+    <button onclick="displayAllCounsellingAdmin()">Counselling Requests</button>
     <div id="adminContent"></div>
   </section>
+
+  <button id="logoutBtn2" onclick="logout()" style="margin-top:20px;">Logout</button>
 
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
 
