@@ -33,7 +33,7 @@ function login() {
     localStorage.setItem("loggedInStudent", JSON.stringify(loggedInStudent));
     document.getElementById("login").classList.add("hidden");
     document.getElementById("logoutBtn").classList.remove("hidden");
-    showAdminPanel();
+    showSection("adminDashboard");
     alert("✅ Logged in as Admin!");
     return;
   }
@@ -180,8 +180,12 @@ window.onload = () => {
   const student = JSON.parse(localStorage.getItem("loggedInStudent"));
   if (student) {
     loggedInStudent = student;
-    document.getElementById("login").classList.add("hidden");
-    document.querySelectorAll("section.hidden").forEach(s => s.classList.remove("hidden"));
+    if (student.role === "admin") {
+      showSection("adminDashboard");
+    } else {
+      document.getElementById("login").classList.add("hidden");
+      document.querySelectorAll("section.hidden").forEach(s => s.classList.remove("hidden"));
+    }
     document.getElementById("logoutBtn").classList.remove("hidden");
   } else {
     document.getElementById("logoutBtn").classList.add("hidden");
@@ -192,68 +196,7 @@ window.onload = () => {
   displayCounsellors();
 };
 
-// ---------------------- ADMIN PANEL ----------------------
-function showAdminPanel() {
-  const adminPanel = document.createElement("div");
-  adminPanel.innerHTML = `
-    <h2>Admin Dashboard</h2>
-    <button onclick="adminAddTutor()">Add Tutor</button>
-    <button onclick="adminAddItem()">Add Marketplace Item</button>
-    <button onclick="adminAddGroup()">Add Study Group</button>
-    <button onclick="adminAddCounsellor()">Add Counsellor</button>
-    <div id="adminOutput"></div>
-  `;
-  document.body.innerHTML = "";
-  document.body.appendChild(adminPanel);
-}
-
-function adminAddTutor() {
-  const name = prompt("Enter tutor name:");
-  const module = prompt("Enter tutor module:");
-  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
-  tutors.push({ name, module });
-  localStorage.setItem("tutors", JSON.stringify(tutors));
-  alert("Tutor added successfully!");
-}
-
-function adminAddItem() {
-  const name = prompt("Enter item name:");
-  const price = prompt("Enter item price:");
-  const items = JSON.parse(localStorage.getItem("items")) || [];
-  items.push({ name, price });
-  localStorage.setItem("items", JSON.stringify(items));
-  alert("Item added successfully!");
-}
-
-function adminAddGroup() {
-  const subject = prompt("Enter study group subject:");
-  const time = prompt("Enter group time:");
-  const location = prompt("Enter group location:");
-  const groups = JSON.parse(localStorage.getItem("groups")) || [];
-  groups.push({ subject, time, location });
-  localStorage.setItem("groups", JSON.stringify(groups));
-  alert("Study group added successfully!");
-}
-
-function adminAddCounsellor() {
-  const name = prompt("Enter counsellor name:");
-  const headline = prompt("Enter counsellor headline:");
-  const availability = prompt("Enter availability:");
-  const counsellors = JSON.parse(localStorage.getItem("counsellors")) || [];
-  counsellors.push({ name, headline, availability });
-  localStorage.setItem("counsellors", JSON.stringify(counsellors));
-  alert("Counsellor added successfully!");
-}
-
-// Function to show one section and hide the others
-function showSection(sectionId) {
-  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-  const selected = document.getElementById(sectionId);
-  if (selected) selected.classList.remove("hidden");
-  document.getElementById("logoutBtn").classList.remove("hidden");
-}
-
-// ---------------------- ADMIN DASHBOARD ----------------------
+// ---------------------- ADMIN FUNCTIONS ----------------------
 function showRegisteredStudents() {
   const students = JSON.parse(localStorage.getItem("students")) || [];
   const content = students.length
@@ -274,6 +217,16 @@ function clearAllData() {
     showSection("login");
   }
 }
+
+// ---------------------- SHOW/HIDE SECTIONS ----------------------
+function showSection(sectionId) {
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  const selected = document.getElementById(sectionId);
+  if (selected) selected.classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+}
+
+
 
 
 
