@@ -106,31 +106,56 @@ function addTutor() {
  document.getElementById("tutorCourse").value = ""; 
  document.getElementById("tutorModule").value = ""; 
 } 
+
+function adminAddTutor() {
+  const name = prompt("Enter tutor name:");
+  const campus = prompt("Enter tutor campus:");
+  const course = prompt("Enter tutor course:");
+  const module = prompt("Enter tutor module:");
+
+  if (!name || !campus || !course || !module) {
+    alert("Please fill all fields!");
+    return;
+  }
+
+  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+  tutors.push({ name, campus, course, module });
+  localStorage.setItem("tutors", JSON.stringify(tutors));
+  alert("Tutor added successfully!");
+  showTutors(); // <- updates the list in Tutor Management
+}
+
+
+// Display all tutors inside Tutor Management
+function showTutors() {
+  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+  const listContainer = document.getElementById("tutorListAdmin"); // <- IMPORTANT
+
+  if (!listContainer) return; // safety check
+
+  if (tutors.length === 0) {
+    listContainer.innerHTML = "<p>No tutors registered yet.</p>";
+    return;
+  }
+
+  let html = "<h3>Registered Tutors:</h3><ul>";
+  tutors.forEach((t, i) => {
+    html += `<li>${t.name} - ${t.campus} - ${t.course} - ${t.module}
+      <button onclick="deleteTutor('${t.name}')">Delete</button></li>`;
+  });
+  html += "</ul>";
+  listContainer.innerHTML = html;
+}
  
-function displayTutors() { 
- const list = document.getElementById("tutorList"); 
- list.innerHTML = ""; 
- const tutors = JSON.parse(localStorage.getItem("tutors")) || []; 
- tutors.forEach(t => { 
-   const div = document.createElement("div"); 
-   div.textContent = `${t.name} - ${t.campus} - ${t.course} - ${t.module}`; 
-   if (loggedInStudent && loggedInStudent.role === "admin") { 
-     const delBtn = document.createElement("button"); 
-     delBtn.textContent = "Delete"; 
-     delBtn.onclick = () => deleteTutor(t.name); 
-     div.appendChild(delBtn); 
-   } 
-   list.appendChild(div); 
- }); 
-} 
  
-function deleteTutor(name) { 
- if (!confirm("Delete this tutor?")) return; 
- let tutors = JSON.parse(localStorage.getItem("tutors")) || []; 
- tutors = tutors.filter(t => t.name !== name); 
- localStorage.setItem("tutors", JSON.stringify(tutors)); 
- displayTutors(); 
-} 
+function deleteTutor(name) {
+  if (!confirm("Delete this tutor?")) return;
+  let tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+  tutors = tutors.filter(t => t.name !== name);
+  localStorage.setItem("tutors", JSON.stringify(tutors));
+  showTutors(); // <- updates the list after deletion
+}
+
  
 // ---------------------- STUDENT TUTOR REQUEST ---------------------- 
 function studentTutorRequest() { 
@@ -236,6 +261,7 @@ function openTutorManagement() {
   // Show tutors immediately if any
   showTutors();
 }
+
 
 
 
