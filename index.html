@@ -132,20 +132,30 @@
  </section> 
  
  <!-- Admin Dashboard Section --> 
- <section id="adminDashboard" class="hidden"> 
-   <h2>Admin Dashboard</h2> 
-   <button onclick="displayTutorRequestsAdmin()">Tutor Requests</button> 
-   <button onclick="displayAllItemsAdmin()">Marketplace Posts</button> 
-   <button onclick="displayAllGroupsAdmin()">Study Groups</button> 
-   <button onclick="displayAllCounsellingAdmin()">Counselling Requests</button> 
-   <div id="adminContent"></div> 
- </section> 
+<section id="adminDashboard" class="hidden">
+  <h2>Admin Dashboard</h2>
+  
+  <h3>🎓 Student Management</h3>
+  <button onclick="showRegisteredStudents()">View Students</button>
+  <button onclick="adminAddStudent()">Add Student</button>
+  <button onclick="clearAllData()">Clear All Students</button>
+  
+  <hr>
+  
+  <h3>👩‍🏫 Tutor Management</h3>
+  <button onclick="showTutors()">View Tutors</button>
+  <button onclick="adminAddTutor()">Add Tutor</button>
+  <button onclick="clearTutors()">Clear All Tutors</button>
+  
+  <div id="adminContent"></div>
+</section>
  
  <button id="logoutBtn2" onclick="logout()" style="margin-top:20px;">Logout</button> 
  
  <script src="app.js"></script> 
 </body> 
 </html>
+
 
 
 
