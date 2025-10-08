@@ -220,6 +220,23 @@ window.onload = () => {
    else showStudentServices(); 
  } 
 };
+// Open Tutor Management tab
+function openTutorManagement() {
+  const adminContent = document.getElementById("adminContent");
+
+  // HTML for Tutor Management page
+  adminContent.innerHTML = `
+    <h3>Tutor Management</h3>
+    <button onclick="showTutors()">View Tutors</button>
+    <button onclick="adminAddTutor()">Add Tutor</button>
+    <button onclick="clearTutors()">Delete All Tutors</button>
+    <div id="tutorListAdmin"></div>
+  `;
+
+  // Show tutors immediately if any
+  showTutors();
+}
+
 
 
 
