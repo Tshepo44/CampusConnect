@@ -135,6 +135,12 @@ textarea {
    padding: 15px; 
  } 
 } 
+#adminDashboard button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+}
+
 
 
 
