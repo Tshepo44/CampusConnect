@@ -221,6 +221,74 @@ window.onload = () => {
  } 
 };
 
+// =====================
+// 🧑‍🏫 TUTOR MANAGEMENT
+// =====================
+
+// Load tutors from localStorage
+function getTutors() {
+  return JSON.parse(localStorage.getItem("tutors")) || [];
+}
+
+// Save tutors back to localStorage
+function saveTutors(tutors) {
+  localStorage.setItem("tutors", JSON.stringify(tutors));
+}
+
+// Display tutors in admin dashboard
+function showTutors() {
+  const tutors = getTutors();
+  const adminContent = document.getElementById("adminContent");
+
+  if (tutors.length === 0) {
+    adminContent.innerHTML = "<p>No tutors registered yet.</p>";
+    return;
+  }
+
+  let html = "<h3>Registered Tutors:</h3><ul>";
+  tutors.forEach((t, i) => {
+    html += `<li>${t.name} - ${t.subject}
+      <button onclick="deleteTutor(${i})">Delete</button></li>`;
+  });
+  html += "</ul>";
+  adminContent.innerHTML = html;
+}
+
+// Add new tutor (prompt inputs)
+function adminAddTutor() {
+  const name = prompt("Enter tutor name:");
+  const subject = prompt("Enter tutor subject:");
+
+  if (!name || !subject) {
+    alert("Please enter both name and subject.");
+    return;
+  }
+
+  const tutors = getTutors();
+  tutors.push({ name, subject });
+  saveTutors(tutors);
+  alert("Tutor added successfully!");
+  showTutors();
+}
+
+// Delete one tutor
+function deleteTutor(index) {
+  const tutors = getTutors();
+  if (confirm(`Remove tutor ${tutors[index].name}?`)) {
+    tutors.splice(index, 1);
+    saveTutors(tutors);
+    showTutors();
+  }
+}
+
+// Clear all tutors
+function clearTutors() {
+  if (confirm("Delete all tutors?")) {
+    localStorage.removeItem("tutors");
+    document.getElementById("adminContent").innerHTML = "<p>All tutors deleted.</p>";
+  }
+}
+
 
 
 
