@@ -131,16 +131,19 @@
    <div id="counsellingList"></div> 
  </section> 
  
- <!-- Admin Dashboard Section --> 
-<section id="adminDashboard" class="hidden"> 
-   <h2>Admin Dashboard</h2> 
-   <button onclick="displayTutorRequestsAdmin()">Tutor Requests</button> 
-   <button onclick="displayAllItemsAdmin()">Marketplace Posts</button> 
-   <button onclick="displayAllGroupsAdmin()">Study Groups</button> 
-   <button onclick="displayAllCounsellingAdmin()">Counselling Requests</button>
-   <button onclick="openTutorManagement()">Tutor Management</button>
-   <div id="adminContent"></div> 
+<section id="adminDashboard" class="hidden">
+  <h2>Admin Dashboard</h2>
+  <button onclick="displayTutorRequestsAdmin()">Tutor Requests</button>
+  <button onclick="displayAllItemsAdmin()">Marketplace Posts</button>
+  <button onclick="displayAllGroupsAdmin()">Study Groups</button>
+  <button onclick="displayAllCounsellingAdmin()">Counselling Requests</button>
+  <button onclick="openTutorManagement()">Tutor Management</button>
+  <div id="adminContent"></div>
+
+  <!-- This is the new part -->
+  <div id="tutorRequestsAdmin"></div>
 </section>
+
 
 
 
@@ -150,6 +153,7 @@
  <script src="app.js"></script> 
 </body> 
 </html>
+
 
 
 
