@@ -71,6 +71,9 @@ function showStudentServices() {
  document.getElementById("marketplaceAdminView").style.display = "none"; 
  document.getElementById("groupAdminView").style.display = "none"; 
  document.getElementById("counsellingAdminView").style.display = "none"; 
+
+ displayStudentTutorRequests();
+
 } 
  
 function showAdminServices() { 
@@ -158,70 +161,82 @@ function deleteTutor(name) {
 
  
 // ---------------------- STUDENT TUTOR REQUEST ---------------------- 
-function studentTutorRequest() { 
- const campus = prompt("Enter your Campus:"); 
- const course = prompt("Enter your Course:"); 
- const module = prompt("Enter the Module:"); 
- const tutors = JSON.parse(localStorage.getItem("tutors")) || []; 
- const matches = tutors.filter(t => t.campus === campus || t.course === course || t.module === module); 
- if (!matches.length) { 
-   alert("No tutors available for this selection!"); 
-   return; 
- } 
- let list = "Available Tutors:\n"; 
- matches.forEach((t, i) => list += `${i+1}. ${t.name} - ${t.course} - ${t.module}\n`); 
- const choice = prompt(list + "\nEnter the number of the tutor to request help from:"); 
- if (!choice || isNaN(choice) || choice < 1 || choice > matches.length) return; 
- const helpContent = prompt("Write a short paragraph describing what you want help with:"); 
- const tutorRequests = JSON.parse(localStorage.getItem("tutorRequests")) || []; 
- tutorRequests.push({ 
-   studentNumber: loggedInStudent.studentNumber, 
-   tutorName: matches[choice-1].name, 
-   course, 
-   module, 
-   campus, 
-   content: helpContent, 
-   status: "Pending" 
- }); 
- localStorage.setItem("tutorRequests", JSON.stringify(tutorRequests)); 
- alert("✅ Request sent to admin. You will be notified when admin responds."); 
-} 
+function studentTutorRequest() {
+  const campus = prompt("Enter your Campus:");
+  const course = prompt("Enter your Course:");
+  const module = prompt("Enter the Module:");
+  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+  const matches = tutors.filter(t => t.campus === campus || t.course === course || t.module === module);
+  if (!matches.length) {
+    alert("No tutors available for this selection!");
+    return;
+  }
+
+  let list = "Available Tutors:\n";
+  matches.forEach((t, i) => list += `${i+1}. ${t.name} - ${t.course} - ${t.module}\n`);
+  const choice = prompt(list + "\nEnter the number of the tutor to request help from:");
+  if (!choice || isNaN(choice) || choice < 1 || choice > matches.length) return;
+  const helpContent = prompt("Write a short paragraph describing what you want help with:");
+
+  const tutorRequests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+  tutorRequests.push({
+    studentNumber: loggedInStudent.studentNumber,
+    tutorName: matches[choice-1].name,
+    course,
+    module,
+    campus,
+    content: helpContent,
+    status: "Pending",
+    notified: false,
+    createdAt: new Date().toISOString()
+  });
+  localStorage.setItem("tutorRequests", JSON.stringify(tutorRequests));
+  alert("✅ Request sent to admin. You will be notified when admin responds.");
+  displayStudentTutorRequests(); // show updates right away
+}
+
  
 // ---------------------- ADMIN TUTOR REQUESTS ---------------------- 
-function displayTutorRequestsAdmin() { 
- const container = document.getElementById("tutorRequests"); 
- container.innerHTML = "<h3>Pending Tutor Requests</h3>"; 
- const requests = JSON.parse(localStorage.getItem("tutorRequests")) || []; 
- if (!requests.length) { container.innerHTML += "<p>No requests.</p>"; return; } 
+function displayTutorRequestsAdmin() {
+  showSection('adminDashboard');
+  const container = document.getElementById("tutorRequestsAdmin");
+  if (!container) return;
+  container.innerHTML = "<h3>Pending Tutor Requests</h3>";
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+  if (!requests.length) { container.innerHTML += "<p>No requests.</p>"; return; }
+
+  requests.forEach((r, i) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${r.studentNumber}</strong> requested <strong>${r.tutorName}</strong> for ${r.course}-${r.module} at ${r.campus}.<br>
+      Content: ${r.content}<br>
+      Status: ${r.status}
+    `;
+    if (r.status === "Pending") {
+      const acceptBtn = document.createElement("button");
+      acceptBtn.textContent = "Accept";
+      acceptBtn.onclick = () => respondTutorRequest(i, "Accepted");
+      const rejectBtn = document.createElement("button");
+      rejectBtn.textContent = "Reject";
+      rejectBtn.onclick = () => respondTutorRequest(i, "Rejected");
+      div.appendChild(acceptBtn);
+      div.appendChild(rejectBtn);
+    }
+    container.appendChild(div);
+  });
+}
+
  
- requests.forEach((r, i) => { 
-   const div = document.createElement("div"); 
-   div.innerHTML = ` 
-     ${r.studentNumber} requested ${r.tutorName} for ${r.course}-${r.module} at ${r.campus}.<br> 
-     Content: ${r.content}<br> 
-     Status: ${r.status} 
-   `; 
-   if (r.status === "Pending") { 
-     const acceptBtn = document.createElement("button"); 
-     acceptBtn.textContent = "Accept"; 
-     acceptBtn.onclick = () => respondTutorRequest(i, "Accepted"); 
-     const rejectBtn = document.createElement("button"); 
-     rejectBtn.textContent = "Reject"; 
-     rejectBtn.onclick = () => respondTutorRequest(i, "Rejected"); 
-     div.appendChild(acceptBtn); 
-     div.appendChild(rejectBtn); 
-   } 
-   container.appendChild(div); 
- }); 
-} 
- 
-function respondTutorRequest(index, status) { 
- const requests = JSON.parse(localStorage.getItem("tutorRequests")) || []; 
- requests[index].status = status; 
- localStorage.setItem("tutorRequests", JSON.stringify(requests)); 
- alert(`Request ${status} and student will be notified.`); 
- displayTutorRequestsAdmin(); 
-} 
+function respondTutorRequest(index, status) {
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+  if (!requests[index]) return;
+  requests[index].status = status;
+  requests[index].notified = false; // student hasn’t seen update yet
+  localStorage.setItem("tutorRequests", JSON.stringify(requests));
+  alert(`Request ${status}. Student will be notified next time they log in or open Tutor Requests.`);
+  displayTutorRequestsAdmin();
+}
+
  
 // ---------------------- TODO: Marketplace, Study Groups, Counselling ---------------------- 
 // For brevity, the logic pattern is same as tutor requests, with: 
@@ -310,6 +325,42 @@ document.getElementById("submitTutorBtn").onclick = () => {
   document.getElementById("tutorFormAdmin").classList.add("hidden");
 };
 
+
+function displayStudentTutorRequests() {
+  const container = document.getElementById("tutorRequests");
+  if (!container) return;
+  if (!loggedInStudent || loggedInStudent.role !== "student") {
+    container.innerHTML = "";
+    return;
+  }
+
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+  const myRequests = requests.filter(r => r.studentNumber === loggedInStudent.studentNumber);
+
+  if (!myRequests.length) {
+    container.innerHTML = "<p>You have not made any tutor requests yet.</p>";
+    return;
+  }
+
+  let html = "<h3>Your Tutor Requests</h3><ul>";
+  myRequests.forEach((r) => {
+    html += `<li><strong>${r.tutorName}</strong> (${r.course}-${r.module}) at ${r.campus}<br>
+             Content: ${r.content}<br>Status: ${r.status}</li>`;
+  });
+  html += "</ul>";
+  container.innerHTML = html;
+
+  // Notify student if admin has responded
+  let changed = false;
+  requests.forEach(r => {
+    if (r.studentNumber === loggedInStudent.studentNumber && r.notified === false && r.status !== "Pending") {
+      alert(`📣 Your tutor request for ${r.module} (${r.tutorName}) has been ${r.status}.`);
+      r.notified = true;
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
+}
 
 
 
