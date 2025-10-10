@@ -269,25 +269,6 @@ function respondTutorRequest(studentNumber, tutorName, status) {
 
 
 
- 
-function respondTutorRequest(index, status) {
-  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
-  if (!requests[index]) return;
-
-  // Ask admin to write a short paragraph about the session
-  const adminMessage = prompt(
-    `Write a short paragraph describing how, where, and when the session will take place.\n\nExample:\nSession will be held at Library Room 2 on Tuesday at 2 PM.`
-  );
-
-  requests[index].status = status;
-  requests[index].adminMessage = adminMessage || "No details provided.";
-  requests[index].notified = false; // student hasn’t seen update yet
-
-  localStorage.setItem("tutorRequests", JSON.stringify(requests));
-  alert(`Request ${status}. Message sent to student.`);
-  displayTutorRequestsAdmin();
-}
-
 
  
 // ---------------------- TODO: Marketplace, Study Groups, Counselling ---------------------- 
@@ -419,6 +400,7 @@ function displayStudentTutorRequests() {
   });
   if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
+
 
 
 
