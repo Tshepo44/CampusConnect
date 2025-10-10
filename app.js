@@ -293,10 +293,22 @@ window.onload = () => {
    else showStudentServices(); 
  } 
 };
-// Open Tutor Management tab
+
+
+// ---------------------- TUTOR MANAGEMENT TOGGLE ----------------------
+let tutorManagementVisible = false; // Global toggle variable
+
 function openTutorManagement() {
   const adminContent = document.getElementById("adminContent");
 
+  // Toggle visibility
+  tutorManagementVisible = !tutorManagementVisible;
+  if (!tutorManagementVisible) {
+    adminContent.innerHTML = ""; // hide Tutor Management section
+    return;
+  }
+
+  // Show Tutor Management section
   adminContent.innerHTML = `
     <h3>Tutor Management</h3>
     <button id="showAddTutorFormBtn">Add Tutor</button>
@@ -319,7 +331,7 @@ function openTutorManagement() {
   // Show tutors immediately if any
   showTutors();
 
-  // ✅ These event listeners are now inside the function, so they work!
+  // These event listeners stay the same
   document.getElementById("showAddTutorFormBtn").onclick = () => {
     document.getElementById("tutorFormAdmin").classList.remove("hidden");
   };
@@ -354,6 +366,7 @@ function openTutorManagement() {
     document.getElementById("tutorFormAdmin").classList.add("hidden");
   };
 }
+
 
 
 
@@ -413,6 +426,7 @@ function deleteStudentRequest(index) {
   alert("Request deleted successfully!");
   displayStudentTutorRequests();
 }
+
 
 
 
