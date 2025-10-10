@@ -201,30 +201,43 @@ function displayTutorRequestsAdmin() {
   showSection('adminDashboard');
   const container = document.getElementById("tutorRequestsAdmin");
   if (!container) return;
-  container.innerHTML = "<h3>Pending Tutor Requests</h3>";
-  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
-  if (!requests.length) { container.innerHTML += "<p>No requests.</p>"; return; }
 
-  requests.forEach((r, i) => {
+  container.innerHTML = "<h3>Pending Tutor Requests</h3>";
+
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+
+  // ✅ Only show requests that are still pending
+  const pendingRequests = requests.filter(r => r.status === "Pending");
+
+  if (!pendingRequests.length) {
+    container.innerHTML += "<p>No pending requests.</p>";
+    return;
+  }
+
+  pendingRequests.forEach((r, i) => {
     const div = document.createElement("div");
     div.innerHTML = `
-      <strong>${r.studentNumber}</strong> requested <strong>${r.tutorName}</strong> for ${r.course}-${r.module} at ${r.campus}.<br>
+      <strong>${r.studentNumber}</strong> requested <strong>${r.tutorName}</strong> 
+      for ${r.course}-${r.module} at ${r.campus}.<br>
       Content: ${r.content}<br>
       Status: ${r.status}
     `;
-    if (r.status === "Pending") {
-      const acceptBtn = document.createElement("button");
-      acceptBtn.textContent = "Accept";
-      acceptBtn.onclick = () => respondTutorRequest(i, "Accepted");
-      const rejectBtn = document.createElement("button");
-      rejectBtn.textContent = "Reject";
-      rejectBtn.onclick = () => respondTutorRequest(i, "Rejected");
-      div.appendChild(acceptBtn);
-      div.appendChild(rejectBtn);
-    }
+
+    // ✅ Only show buttons for pending requests
+    const acceptBtn = document.createElement("button");
+    acceptBtn.textContent = "Accept";
+    acceptBtn.onclick = () => respondTutorRequest(i, "Accepted");
+
+    const rejectBtn = document.createElement("button");
+    rejectBtn.textContent = "Reject";
+    rejectBtn.onclick = () => respondTutorRequest(i, "Rejected");
+
+    div.appendChild(acceptBtn);
+    div.appendChild(rejectBtn);
     container.appendChild(div);
   });
 }
+
 
  
 function respondTutorRequest(index, status) {
@@ -376,6 +389,7 @@ function displayStudentTutorRequests() {
   });
   if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
+
 
 
 
