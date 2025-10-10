@@ -308,31 +308,27 @@ function openTutorManagement() {
     return;
   }
 
-  // Main Tutor Management Menu
+  // Main Tutor Management Menu with Add Tutor form
   adminContent.innerHTML = `
     <h3>Tutor Management</h3>
-    <button onclick="openAddTutorForm()">➕ Add Tutor</button>
+    <div id="tutorFormAdmin" style="margin-bottom:20px;">
+      <input id="adminTutorName" placeholder="Tutor Name"><br><br>
+      <input id="adminTutorCampus" placeholder="Campus"><br><br>
+      <input id="adminTutorCourse" placeholder="Course"><br><br>
+      <input id="adminTutorModule" placeholder="Module"><br><br>
+      <button id="submitTutorBtn">💾 Save Tutor</button>
+    </div>
     <button onclick="clearTutors()">🗑️ Delete All Tutors</button>
     <div id="tutorListAdmin"></div>
   `;
 
-  showTutors(); // show tutors list immediately
+  showTutors(); // show the current tutor list immediately
+
+  // Connect Save Tutor button to saveTutor function
+  document.getElementById("submitTutorBtn").onclick = saveTutor;
 }
 
-// Separate screen for adding tutor (just like other popups)
-function openAddTutorForm() {
-  const adminContent = document.getElementById("adminContent");
 
-  adminContent.innerHTML = `
-    <h3>Add New Tutor</h3>
-    <input id="adminTutorName" placeholder="Tutor Name"><br><br>
-    <input id="adminTutorCampus" placeholder="Campus"><br><br>
-    <input id="adminTutorCourse" placeholder="Course"><br><br>
-    <input id="adminTutorModule" placeholder="Module"><br><br>
-    <button onclick="saveTutor()">💾 Save Tutor</button>
-    <button onclick="openTutorManagement()">⬅️ Back</button>
-  `;
-}
 
 // Save tutor data and go back
 function saveTutor() {
@@ -351,8 +347,17 @@ function saveTutor() {
   localStorage.setItem("tutors", JSON.stringify(tutors));
 
   alert("Tutor added successfully!");
-  openTutorManagement(); // Go back to main tutor list after saving
+
+  // Clear the form fields
+  document.getElementById("adminTutorName").value = "";
+  document.getElementById("adminTutorCampus").value = "";
+  document.getElementById("adminTutorCourse").value = "";
+  document.getElementById("adminTutorModule").value = "";
+
+  // Refresh the tutor list
+  showTutors();
 }
+
 
 
 
@@ -414,6 +419,7 @@ function deleteStudentRequest(index) {
   alert("Request deleted successfully!");
   displayStudentTutorRequests();
 }
+
 
 
 
