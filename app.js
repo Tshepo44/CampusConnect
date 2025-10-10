@@ -230,12 +230,21 @@ function displayTutorRequestsAdmin() {
 function respondTutorRequest(index, status) {
   const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
   if (!requests[index]) return;
+
+  // Ask admin to write a short paragraph about the session
+  const adminMessage = prompt(
+    `Write a short paragraph describing how, where, and when the session will take place.\n\nExample:\nSession will be held at Library Room 2 on Tuesday at 2 PM.`
+  );
+
   requests[index].status = status;
+  requests[index].adminMessage = adminMessage || "No details provided.";
   requests[index].notified = false; // student hasn’t seen update yet
+
   localStorage.setItem("tutorRequests", JSON.stringify(requests));
-  alert(`Request ${status}. Student will be notified next time they log in or open Tutor Requests.`);
+  alert(`Request ${status}. Message sent to student.`);
   displayTutorRequestsAdmin();
 }
+
 
  
 // ---------------------- TODO: Marketplace, Study Groups, Counselling ---------------------- 
@@ -344,23 +353,33 @@ function displayStudentTutorRequests() {
 
   let html = "<h3>Your Tutor Requests</h3><ul>";
   myRequests.forEach((r) => {
-    html += `<li><strong>${r.tutorName}</strong> (${r.course}-${r.module}) at ${r.campus}<br>
-             Content: ${r.content}<br>Status: ${r.status}</li>`;
+    html += `<li>
+               <strong>${r.tutorName}</strong> (${r.course}-${r.module}) at ${r.campus}<br>
+               Content: ${r.content}<br>
+               <b>Status:</b> ${r.status}<br>`;
+    if (r.adminMessage) {
+      html += `<b>Admin Message:</b> ${r.adminMessage}<br>`;
+    }
+    html += "</li>";
   });
   html += "</ul>";
   container.innerHTML = html;
 
-  // Notify student if admin has responded
+  // Notify student about any new responses
   let changed = false;
   requests.forEach(r => {
     if (r.studentNumber === loggedInStudent.studentNumber && r.notified === false && r.status !== "Pending") {
-      alert(`📣 Your tutor request for ${r.module} (${r.tutorName}) has been ${r.status}.`);
+      let alertMsg = `📣 Your tutor request for ${r.module} (${r.tutorName}) has been ${r.status}.`;
+      if (r.adminMessage) alertMsg += `\n\nAdmin Message:\n${r.adminMessage}`;
+      alert(alertMsg);
       r.notified = true;
       changed = true;
     }
   });
   if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
+
+
 
 
 
