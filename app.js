@@ -357,61 +357,49 @@ function openTutorManagement() {
 
 
 
+// Show all tutor requests the student has made
 function displayStudentTutorRequests() {
-  const container = document.getElementById("tutorRequests");
-  if (!container) return;
-  if (!loggedInStudent || loggedInStudent.role !== "student") {
-    container.innerHTML = "";
-    return;
-  }
-
+  const studentContent = document.getElementById("studentContent");
   const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+
+  const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
+  if (!loggedInStudent) return;
+
   const myRequests = requests.filter(r => r.studentNumber === loggedInStudent.studentNumber);
 
-  if (!myRequests.length) {
-    container.innerHTML = "<p>You have not made any tutor requests yet.</p>";
+  studentContent.innerHTML = "<h3>My Tutor Requests</h3>";
+
+  if (myRequests.length === 0) {
+    studentContent.innerHTML += "<p>You haven't made any tutor requests yet.</p>";
     return;
   }
 
-  let html = "<h3>Your Tutor Requests</h3><ul>";
-  myRequests.forEach((r, i) => {
-    html += `<li>
-               <strong>${r.tutorName}</strong> (${r.course}-${r.module}) at ${r.campus}<br>
-               Content: ${r.content}<br>
-               <b>Status:</b> ${r.status}<br>`;
-    if (r.adminMessage) {
-      html += `<b>Admin Message:</b> ${r.adminMessage}<br>`;
-    }
-    html += `<button onclick="deleteStudentRequest(${i})">Delete Request</button>`;
-    html += "</li>";
+  myRequests.forEach((req, i) => {
+    studentContent.innerHTML += `
+      <div class="request-box">
+        <p><strong>Module:</strong> ${req.module}</p>
+        <p><strong>Requested Tutor:</strong> ${req.tutorName}</p>
+        <p><strong>Status:</strong> ${req.status}</p>
+        ${req.adminMessage ? `<p><strong>Admin Message:</strong> ${req.adminMessage}</p>` : ""}
+        <button onclick="deleteStudentRequest(${i})" class="delete-btn">🗑️ Delete Request</button>
+      </div>
+      <hr>
+    `;
   });
-  html += "</ul>";
-  container.innerHTML = html;
-
-  // Notify student about any new responses
-  let changed = false;
-  requests.forEach(r => {
-    if (r.studentNumber === loggedInStudent.studentNumber && r.notified === false && r.status !== "Pending") {
-      let alertMsg = `📣 Your tutor request for ${r.module} (${r.tutorName}) has been ${r.status}.`;
-      if (r.adminMessage) alertMsg += `\n\nAdmin Message:\n${r.adminMessage}`;
-      alert(alertMsg);
-      r.notified = true;
-      changed = true;
-    }
-  });
-  if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
-
 // 🗑️ Allow student to delete their own requests
 function deleteStudentRequest(index) {
   if (!confirm("Are you sure you want to delete this request?")) return;
-  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
 
-  // Filter out only this student's requests
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+  const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
+  if (!loggedInStudent) return;
+
+  // Filter out this student's requests
   const myRequests = requests.filter(r => r.studentNumber === loggedInStudent.studentNumber);
   const requestToDelete = myRequests[index];
 
-  // Remove that request from the main list
+  // Remove the specific request from main list
   const updatedRequests = requests.filter(r =>
     !(r.studentNumber === requestToDelete.studentNumber &&
       r.tutorName === requestToDelete.tutorName &&
@@ -419,12 +407,14 @@ function deleteStudentRequest(index) {
       r.module === requestToDelete.module)
   );
 
-  // Save updated list
+  // Save back to localStorage
   localStorage.setItem("tutorRequests", JSON.stringify(updatedRequests));
 
-  // Refresh the student’s request list
+  alert("Request deleted successfully!");
   displayStudentTutorRequests();
 }
+
+
 
 
 
