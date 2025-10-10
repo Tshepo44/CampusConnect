@@ -374,7 +374,7 @@ function displayStudentTutorRequests() {
   }
 
   let html = "<h3>Your Tutor Requests</h3><ul>";
-  myRequests.forEach((r) => {
+  myRequests.forEach((r, i) => {
     html += `<li>
                <strong>${r.tutorName}</strong> (${r.course}-${r.module}) at ${r.campus}<br>
                Content: ${r.content}<br>
@@ -382,6 +382,7 @@ function displayStudentTutorRequests() {
     if (r.adminMessage) {
       html += `<b>Admin Message:</b> ${r.adminMessage}<br>`;
     }
+    html += `<button onclick="deleteStudentRequest(${i})">Delete Request</button>`;
     html += "</li>";
   });
   html += "</ul>";
@@ -400,6 +401,32 @@ function displayStudentTutorRequests() {
   });
   if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
+
+// 🗑️ Allow student to delete their own requests
+function deleteStudentRequest(index) {
+  if (!confirm("Are you sure you want to delete this request?")) return;
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+
+  // Filter out only this student's requests
+  const myRequests = requests.filter(r => r.studentNumber === loggedInStudent.studentNumber);
+  const requestToDelete = myRequests[index];
+
+  // Remove that request from the main list
+  const updatedRequests = requests.filter(r =>
+    !(r.studentNumber === requestToDelete.studentNumber &&
+      r.tutorName === requestToDelete.tutorName &&
+      r.course === requestToDelete.course &&
+      r.module === requestToDelete.module)
+  );
+
+  // Save updated list
+  localStorage.setItem("tutorRequests", JSON.stringify(updatedRequests));
+
+  // Refresh the student’s request list
+  displayStudentTutorRequests();
+}
+
+
 
 
 
