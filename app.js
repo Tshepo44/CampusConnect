@@ -273,66 +273,64 @@ window.onload = () => {
 function openTutorManagement() {
   const adminContent = document.getElementById("adminContent");
 
-adminContent.innerHTML = `
-  <h3>Tutor Management</h3>
-  <button id="showAddTutorFormBtn">Add Tutor</button>
-  <button onclick="clearTutors()">Delete All Tutors</button>
+  adminContent.innerHTML = `
+    <h3>Tutor Management</h3>
+    <button id="showAddTutorFormBtn">Add Tutor</button>
+    <button onclick="clearTutors()">Delete All Tutors</button>
 
-  <!-- Tutor List -->
-  <div id="tutorListAdmin"></div>
+    <!-- Tutor List -->
+    <div id="tutorListAdmin"></div>
 
-  <!-- Add Tutor Form -->
-  <div id="tutorFormAdmin" class="hidden">
-    <input id="adminTutorName" placeholder="Tutor Name">
-    <input id="adminTutorCampus" placeholder="Campus">
-    <input id="adminTutorCourse" placeholder="Course">
-    <input id="adminTutorModule" placeholder="Module">
-    <button id="submitTutorBtn">Save Tutor</button>
-    <button id="cancelTutorBtn">Back</button>
-  </div>
-`;
-
+    <!-- Add Tutor Form -->
+    <div id="tutorFormAdmin" class="hidden">
+      <input id="adminTutorName" placeholder="Tutor Name">
+      <input id="adminTutorCampus" placeholder="Campus">
+      <input id="adminTutorCourse" placeholder="Course">
+      <input id="adminTutorModule" placeholder="Module">
+      <button id="submitTutorBtn">Save Tutor</button>
+      <button id="cancelTutorBtn">Back</button>
+    </div>
+  `;
 
   // Show tutors immediately if any
   showTutors();
+
+  // ✅ These event listeners are now inside the function, so they work!
+  document.getElementById("showAddTutorFormBtn").onclick = () => {
+    document.getElementById("tutorFormAdmin").classList.remove("hidden");
+  };
+
+  document.getElementById("cancelTutorBtn").onclick = () => {
+    document.getElementById("tutorFormAdmin").classList.add("hidden");
+  };
+
+  document.getElementById("submitTutorBtn").onclick = () => {
+    const name = document.getElementById("adminTutorName").value;
+    const campus = document.getElementById("adminTutorCampus").value;
+    const course = document.getElementById("adminTutorCourse").value;
+    const module = document.getElementById("adminTutorModule").value;
+
+    if (!name || !campus || !course || !module) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+    tutors.push({ name, campus, course, module });
+    localStorage.setItem("tutors", JSON.stringify(tutors));
+
+    alert("Tutor added successfully!");
+    showTutors();
+
+    // Clear and hide the form
+    document.getElementById("adminTutorName").value = "";
+    document.getElementById("adminTutorCampus").value = "";
+    document.getElementById("adminTutorCourse").value = "";
+    document.getElementById("adminTutorModule").value = "";
+    document.getElementById("tutorFormAdmin").classList.add("hidden");
+  };
 }
 
-// Show the form when clicking Add Tutor button
-document.getElementById("showAddTutorFormBtn").onclick = () => {
-  document.getElementById("tutorFormAdmin").classList.remove("hidden");
-};
-
-// Back button hides the form
-document.getElementById("cancelTutorBtn").onclick = () => {
-  document.getElementById("tutorFormAdmin").classList.add("hidden");
-};
-
-// Submit tutor from the form
-document.getElementById("submitTutorBtn").onclick = () => {
-  const name = document.getElementById("adminTutorName").value;
-  const campus = document.getElementById("adminTutorCampus").value;
-  const course = document.getElementById("adminTutorCourse").value;
-  const module = document.getElementById("adminTutorModule").value;
-
-  if (!name || !campus || !course || !module) {
-    alert("Please fill all fields!");
-    return;
-  }
-
-  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
-  tutors.push({ name, campus, course, module });
-  localStorage.setItem("tutors", JSON.stringify(tutors));
-
-  alert("Tutor added successfully!");
-  showTutors();
-
-  // Clear form and hide it
-  document.getElementById("adminTutorName").value = "";
-  document.getElementById("adminTutorCampus").value = "";
-  document.getElementById("adminTutorCourse").value = "";
-  document.getElementById("adminTutorModule").value = "";
-  document.getElementById("tutorFormAdmin").classList.add("hidden");
-};
 
 
 function displayStudentTutorRequests() {
@@ -378,6 +376,7 @@ function displayStudentTutorRequests() {
   });
   if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
+
 
 
 
