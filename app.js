@@ -197,25 +197,29 @@ function studentTutorRequest() {
 
  
 // ---------------------- ADMIN TUTOR REQUESTS ---------------------- 
-let tutorRequestsVisible = false; // <--- Add this above or near the function (global toggle)
+// Global toggle variable (put this at the top of your app.js)
+let tutorRequestsVisible = false;
 
+// Function to display/hide Pending Tutor Requests in Admin Portal
 function displayTutorRequestsAdmin() {
   const container = document.getElementById("tutorRequestsAdmin");
   if (!container) return;
 
-  // 🔁 Toggle logic
-  if (tutorRequestsVisible) {
-    container.innerHTML = ""; // hide the requests
-    tutorRequestsVisible = false;
+  // Toggle visibility
+  tutorRequestsVisible = !tutorRequestsVisible;
+  if (!tutorRequestsVisible) {
+    container.innerHTML = ""; // hide requests
     return;
   }
 
-  tutorRequestsVisible = true; // show the requests
+  // Get only Pending requests
+  const requests = (JSON.parse(localStorage.getItem("tutorRequests")) || [])
+                     .filter(r => r.status === "Pending");
+
   container.innerHTML = "<h3>Pending Tutor Requests</h3>";
 
-  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
   if (!requests.length) {
-    container.innerHTML += "<p>No requests.</p>";
+    container.innerHTML += "<p>No pending requests.</p>";
     return;
   }
 
@@ -226,19 +230,42 @@ function displayTutorRequestsAdmin() {
       Content: ${r.content}<br>
       Status: ${r.status}
     `;
-    if (r.status === "Pending") {
-      const acceptBtn = document.createElement("button");
-      acceptBtn.textContent = "Accept";
-      acceptBtn.onclick = () => respondTutorRequest(i, "Accepted");
-      const rejectBtn = document.createElement("button");
-      rejectBtn.textContent = "Reject";
-      rejectBtn.onclick = () => respondTutorRequest(i, "Rejected");
-      div.appendChild(acceptBtn);
-      div.appendChild(rejectBtn);
-    }
+    const acceptBtn = document.createElement("button");
+    acceptBtn.textContent = "Accept";
+    acceptBtn.onclick = () => respondTutorRequest(r.studentNumber, r.tutorName, "Accepted");
+
+    const rejectBtn = document.createElement("button");
+    rejectBtn.textContent = "Reject";
+    rejectBtn.onclick = () => respondTutorRequest(r.studentNumber, r.tutorName, "Rejected");
+
+    div.appendChild(acceptBtn);
+    div.appendChild(rejectBtn);
+
     container.appendChild(div);
   });
 }
+
+// Modified respondTutorRequest to accept studentNumber and tutorName for correct index handling
+function respondTutorRequest(studentNumber, tutorName, status) {
+  const requests = JSON.parse(localStorage.getItem("tutorRequests")) || [];
+  const index = requests.findIndex(r => r.studentNumber === studentNumber && r.tutorName === tutorName && r.status === "Pending");
+  if (index === -1) return;
+
+  const adminMessage = prompt(
+    `Write a short paragraph describing how, where, and when the session will take place.\n\nExample:\nSession will be held at Library Room 2 on Tuesday at 2 PM.`
+  );
+
+  requests[index].status = status;
+  requests[index].adminMessage = adminMessage || "No details provided.";
+  requests[index].notified = false; // student hasn’t seen update yet
+
+  localStorage.setItem("tutorRequests", JSON.stringify(requests));
+  alert(`Request ${status}. Message sent to student.`);
+
+  // Refresh admin requests display (only pending will show)
+  displayTutorRequestsAdmin();
+}
+
 
 
 
@@ -392,6 +419,7 @@ function displayStudentTutorRequests() {
   });
   if (changed) localStorage.setItem("tutorRequests", JSON.stringify(requests));
 }
+
 
 
 
