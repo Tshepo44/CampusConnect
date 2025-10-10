@@ -295,77 +295,65 @@ window.onload = () => {
 };
 
 
-// ---------------------- TUTOR MANAGEMENT TOGGLE ----------------------
-let tutorManagementVisible = false; // Global toggle variable
+// ---------------------- TUTOR MANAGEMENT POPUP STYLE ----------------------
+let tutorManagementVisible = false;
 
 function openTutorManagement() {
   const adminContent = document.getElementById("adminContent");
 
-  // Toggle visibility
+  // Toggle visibility (open/close)
   tutorManagementVisible = !tutorManagementVisible;
   if (!tutorManagementVisible) {
-    adminContent.innerHTML = ""; // hide Tutor Management section
+    adminContent.innerHTML = "";
     return;
   }
 
-  // Show Tutor Management section
+  // Main Tutor Management Menu
   adminContent.innerHTML = `
     <h3>Tutor Management</h3>
-    <button id="showAddTutorFormBtn">Add Tutor</button>
-    <button onclick="clearTutors()">Delete All Tutors</button>
-
-    <!-- Tutor List -->
+    <button onclick="openAddTutorForm()">➕ Add Tutor</button>
+    <button onclick="clearTutors()">🗑️ Delete All Tutors</button>
     <div id="tutorListAdmin"></div>
-
-    <!-- Add Tutor Form -->
-    <div id="tutorFormAdmin" class="hidden">
-      <input id="adminTutorName" placeholder="Tutor Name">
-      <input id="adminTutorCampus" placeholder="Campus">
-      <input id="adminTutorCourse" placeholder="Course">
-      <input id="adminTutorModule" placeholder="Module">
-      <button id="submitTutorBtn">Save Tutor</button>
-      <button id="cancelTutorBtn">Back</button>
-    </div>
   `;
 
-  // Show tutors immediately if any
-  showTutors();
-
-  // These event listeners stay the same
-  document.getElementById("showAddTutorFormBtn").onclick = () => {
-    document.getElementById("tutorFormAdmin").classList.remove("hidden");
-  };
-
-  document.getElementById("cancelTutorBtn").onclick = () => {
-    document.getElementById("tutorFormAdmin").classList.add("hidden");
-  };
-
-  document.getElementById("submitTutorBtn").onclick = () => {
-    const name = document.getElementById("adminTutorName").value;
-    const campus = document.getElementById("adminTutorCampus").value;
-    const course = document.getElementById("adminTutorCourse").value;
-    const module = document.getElementById("adminTutorModule").value;
-
-    if (!name || !campus || !course || !module) {
-      alert("Please fill all fields!");
-      return;
-    }
-
-    const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
-    tutors.push({ name, campus, course, module });
-    localStorage.setItem("tutors", JSON.stringify(tutors));
-
-    alert("Tutor added successfully!");
-    showTutors();
-
-    // Clear and hide the form
-    document.getElementById("adminTutorName").value = "";
-    document.getElementById("adminTutorCampus").value = "";
-    document.getElementById("adminTutorCourse").value = "";
-    document.getElementById("adminTutorModule").value = "";
-    document.getElementById("tutorFormAdmin").classList.add("hidden");
-  };
+  showTutors(); // show tutors list immediately
 }
+
+// Separate screen for adding tutor (just like other popups)
+function openAddTutorForm() {
+  const adminContent = document.getElementById("adminContent");
+
+  adminContent.innerHTML = `
+    <h3>Add New Tutor</h3>
+    <input id="adminTutorName" placeholder="Tutor Name"><br><br>
+    <input id="adminTutorCampus" placeholder="Campus"><br><br>
+    <input id="adminTutorCourse" placeholder="Course"><br><br>
+    <input id="adminTutorModule" placeholder="Module"><br><br>
+    <button onclick="saveTutor()">💾 Save Tutor</button>
+    <button onclick="openTutorManagement()">⬅️ Back</button>
+  `;
+}
+
+// Save tutor data and go back
+function saveTutor() {
+  const name = document.getElementById("adminTutorName").value.trim();
+  const campus = document.getElementById("adminTutorCampus").value.trim();
+  const course = document.getElementById("adminTutorCourse").value.trim();
+  const module = document.getElementById("adminTutorModule").value.trim();
+
+  if (!name || !campus || !course || !module) {
+    alert("Please fill in all fields!");
+    return;
+  }
+
+  const tutors = JSON.parse(localStorage.getItem("tutors")) || [];
+  tutors.push({ name, campus, course, module });
+  localStorage.setItem("tutors", JSON.stringify(tutors));
+
+  alert("Tutor added successfully!");
+  openTutorManagement(); // Go back to main tutor list after saving
+}
+
 
 
 
@@ -426,6 +414,7 @@ function deleteStudentRequest(index) {
   alert("Request deleted successfully!");
   displayStudentTutorRequests();
 }
+
 
 
 
