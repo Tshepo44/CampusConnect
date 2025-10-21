@@ -420,6 +420,79 @@ function deleteStudentRequest(index) {
   displayStudentTutorRequests();
 }
 
+function marketplaceAction(action) {
+  if (action === "sell") {
+    const sellerName = prompt("Enter your full name (Name and Surname):");
+    if (!sellerName) return alert("❌ Seller name required!");
+
+    const contact = prompt("Enter your cell number and email (e.g., 0712345678 / example@email.com):");
+    if (!contact) return alert("❌ Contact details required!");
+
+    const location = prompt("Enter your location (Campus or City):");
+    if (!location) return alert("❌ Location required!");
+
+    const itemName = prompt("Enter the name of the item you want to sell:");
+    if (!itemName) return alert("❌ Item name required!");
+
+    const itemPrice = prompt("Enter the price of your item:");
+    if (!itemPrice) return alert("❌ Item price required!");
+
+    // Create temporary input for photo upload
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.multiple = true;
+
+    alert("📸 Please upload exactly 3 photos of your item.");
+
+    fileInput.onchange = (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length !== 3) {
+        alert("❌ You must upload exactly 3 photos.");
+        return;
+      }
+
+      const readerPromises = files.map(file => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(readerPromises).then(photosBase64 => {
+        const items = JSON.parse(localStorage.getItem("items")) || [];
+        const newItem = {
+          id: Date.now(),
+          sellerName,
+          contact,
+          location,
+          itemName,
+          itemPrice,
+          photos: photosBase64,
+          status: "Pending",
+          createdAt: new Date().toISOString(),
+          approved: false
+        };
+        items.push(newItem);
+        localStorage.setItem("items", JSON.stringify(items));
+        alert("✅ Post sent to admin for evaluation. Status: Pending.");
+      });
+    };
+
+    // Trigger file chooser
+    fileInput.click();
+
+  } else if (action === "buy") {
+    displayApprovedItems();
+  }
+}
+
+
+
+
+
 
 
 
