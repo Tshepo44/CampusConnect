@@ -437,7 +437,6 @@ function marketplaceAction(action) {
     const itemPrice = prompt("Enter the price of your item:");
     if (!itemPrice) return alert("❌ Item price required!");
 
-    // Create temporary input for photo upload
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
@@ -463,8 +462,10 @@ function marketplaceAction(action) {
 
       Promise.all(readerPromises).then(photosBase64 => {
         const items = JSON.parse(localStorage.getItem("items")) || [];
+        const loggedIn = JSON.parse(localStorage.getItem("loggedInStudent"));
         const newItem = {
           id: Date.now(),
+          studentNumber: loggedIn ? loggedIn.studentNumber : "unknown",
           sellerName,
           contact,
           location,
@@ -480,14 +481,38 @@ function marketplaceAction(action) {
         alert("✅ Post sent to admin for evaluation. Status: Pending.");
       });
     };
-
-    // Trigger file chooser
     fileInput.click();
 
   } else if (action === "buy") {
     displayApprovedItems();
+
+  } else if (action === "view") {
+    displayMyPostedItems(); // 👈 NEW LINE
   }
 }
+
+function displayMyPostedItems() {
+  const loggedIn = JSON.parse(localStorage.getItem("loggedInStudent"));
+  if (!loggedIn) return alert("Please log in first.");
+
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  const myItems = items.filter(i => i.studentNumber === loggedIn.studentNumber);
+
+  if (myItems.length === 0) {
+    alert("📭 You haven’t posted any items yet.");
+    return;
+  }
+
+  let msg = "🧾 Your Posted Items:\n\n";
+  myItems.forEach((item, index) => {
+    msg += `${index + 1}. ${item.itemName} — R${item.itemPrice}\n📍 ${item.location}\nStatus: ${item.status}\n\n`;
+  });
+
+  alert(msg);
+}
+
+
+
 
 
 
