@@ -437,11 +437,11 @@ function marketplaceAction(action) {
     const itemPrice = prompt("Enter the price of your item:");
     if (!itemPrice) return alert("❌ Item price required!");
 
+    // Let the student upload exactly 3 images
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
     fileInput.multiple = true;
-
     alert("📸 Please upload exactly 3 photos of your item.");
 
     fileInput.onchange = (e) => {
@@ -462,10 +462,11 @@ function marketplaceAction(action) {
 
       Promise.all(readerPromises).then(photosBase64 => {
         const items = JSON.parse(localStorage.getItem("items")) || [];
-        const loggedIn = JSON.parse(localStorage.getItem("loggedInStudent"));
+        const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
+
         const newItem = {
           id: Date.now(),
-          studentNumber: loggedIn ? loggedIn.studentNumber : "unknown",
+          sellerNumber: loggedInStudent.studentNumber,
           sellerName,
           contact,
           location,
@@ -473,43 +474,67 @@ function marketplaceAction(action) {
           itemPrice,
           photos: photosBase64,
           status: "Pending",
-          createdAt: new Date().toISOString(),
-          approved: false
+          createdAt: new Date().toISOString()
         };
+
         items.push(newItem);
         localStorage.setItem("items", JSON.stringify(items));
         alert("✅ Post sent to admin for evaluation. Status: Pending.");
       });
     };
+
     fileInput.click();
 
   } else if (action === "buy") {
     displayApprovedItems();
 
   } else if (action === "view") {
-    displayMyPostedItems(); // 👈 NEW LINE
+    displayMyItems();
   }
 }
 
-function displayMyPostedItems() {
-  const loggedIn = JSON.parse(localStorage.getItem("loggedInStudent"));
-  if (!loggedIn) return alert("Please log in first.");
 
+function displayMyItems() {
+  const container = document.getElementById("itemList");
+  const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
   const items = JSON.parse(localStorage.getItem("items")) || [];
-  const myItems = items.filter(i => i.studentNumber === loggedIn.studentNumber);
+
+  if (!loggedInStudent) return alert("Please log in first!");
+
+  const myItems = items.filter(i => i.sellerNumber === loggedInStudent.studentNumber);
+
+  container.innerHTML = "<h3>🛍️ My Posted Items</h3>";
 
   if (myItems.length === 0) {
-    alert("📭 You haven’t posted any items yet.");
+    container.innerHTML += "<p>You haven't posted any items yet.</p>";
     return;
   }
 
-  let msg = "🧾 Your Posted Items:\n\n";
-  myItems.forEach((item, index) => {
-    msg += `${index + 1}. ${item.itemName} — R${item.itemPrice}\n📍 ${item.location}\nStatus: ${item.status}\n\n`;
+  myItems.forEach(item => {
+    const photosHTML = item.photos.map(p => `<img src="${p}" width="80" height="80" style="margin:3px;border-radius:8px;">`).join("");
+    container.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+        <p><strong>Item:</strong> ${item.itemName}</p>
+        <p><strong>Price:</strong> R${item.itemPrice}</p>
+        <p><strong>Status:</strong> ${item.status}</p>
+        <div>${photosHTML}</div>
+        <button onclick="deleteMyItem(${item.id})">🗑️ Delete</button>
+      </div>
+    `;
   });
-
-  alert(msg);
 }
+
+function deleteMyItem(itemId) {
+  if (!confirm("Are you sure you want to delete this item?")) return;
+
+  let items = JSON.parse(localStorage.getItem("items")) || [];
+  items = items.filter(i => i.id !== itemId);
+  localStorage.setItem("items", JSON.stringify(items));
+  alert("🗑️ Item deleted successfully.");
+  displayMyItems(); // refresh the view
+}
+
+
 
 
 
