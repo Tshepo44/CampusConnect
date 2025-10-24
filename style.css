@@ -167,6 +167,46 @@ textarea {
   margin-top: 8px;
 }
 
+/* ====== Admin Dashboard layout (main row stays in one line) ====== */
+#adminDashboard {
+  position: relative; /* anchor for absolute-positioned submenu */
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* keep main buttons inline in a single row */
+#adminDashboard > button,
+#adminDashboard > div#marketplaceSection {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px;
+}
+
+/* Marketplace section itself stays inline */
+#marketplaceSection {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ====== SUB-BUTTONS: place below entire row, shifted left ====== */
+/* hidden by default; will be toggled with JS by setting display:block */
+#marketSubButtons {
+  display: none;              /* toggled by toggleMarketButtons() */
+  position: absolute;         /* position relative to #adminDashboard */
+  top: calc(100% + 12px);     /* JUST below the entire admin button row */
+  left: 8%;                   /* push the sub-buttons further left under the row */
+  transform: none;            /* no centering transform — we want left alignment */
+  white-space: nowrap;        /* keep buttons on one line */
+  z-index: 50;                /* ensure it sits above other content */
+}
+
+/* style for the sub-buttons so they appear in one row */
+#marketSubButtons button {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
 
 
 
