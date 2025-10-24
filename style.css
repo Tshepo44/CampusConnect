@@ -142,6 +142,34 @@ textarea {
 }
 
 
+/* ====== Admin Dashboard Button Alignment Fix ====== */
+#adminDashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+#adminDashboard button {
+  margin: 5px;
+}
+
+/* Keep Marketplace sub-buttons stacked below Market Post */
+#marketplaceSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#marketSubButtons {
+  display: none;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+
+
 
 
 
