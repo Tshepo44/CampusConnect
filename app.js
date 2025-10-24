@@ -475,6 +475,74 @@ function marketplaceAction(action) {
   }
 }
 
+function toggleMarketButtons() {
+  const subBtns = document.getElementById("marketSubButtons");
+
+  if (subBtns.style.display === "none" || subBtns.style.display === "") {
+    subBtns.style.display = "block";  // Show the two buttons
+  } else {
+    subBtns.style.display = "none";   // Hide them again
+  }
+}
+
+function displayPendingItemsAdmin() {
+  const container = document.getElementById("adminContent");
+  container.innerHTML = "<h3>🕓 Pending Marketplace Posts</h3>";
+
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  const pending = items.filter(i => i.status === "Pending");
+
+  if (pending.length === 0) {
+    container.innerHTML += "<p>No pending posts.</p>";
+    return;
+  }
+
+  pending.forEach(item => {
+    const div = document.createElement("div");
+    div.style = "border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;";
+    div.innerHTML = `
+      <p><strong>Seller:</strong> ${item.sellerName}</p>
+      <p><strong>Item:</strong> ${item.itemName}</p>
+      <p><strong>Price:</strong> R${item.itemPrice}</p>
+      <p><strong>Location:</strong> ${item.location}</p>
+      <p><strong>Contact:</strong> ${item.contact}</p>
+      <p><strong>Status:</strong> ${item.status}</p>
+      <button onclick="approveItem(${item.id})">✅ Approve</button>
+      <button onclick="rejectItem(${item.id})">❌ Reject</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function displayApprovedItemsAdmin() {
+  const container = document.getElementById("adminContent");
+  container.innerHTML = "<h3>✅ Approved Marketplace Posts</h3>";
+
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  const approved = items.filter(i => i.status === "Approved");
+
+  if (approved.length === 0) {
+    container.innerHTML += "<p>No approved posts yet.</p>";
+    return;
+  }
+
+  approved.forEach(item => {
+    const div = document.createElement("div");
+    div.style = "border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;";
+    div.innerHTML = `
+      <p><strong>Seller:</strong> ${item.sellerName}</p>
+      <p><strong>Item:</strong> ${item.itemName}</p>
+      <p><strong>Price:</strong> R${item.itemPrice}</p>
+      <p><strong>Location:</strong> ${item.location}</p>
+      <p><strong>Contact:</strong> ${item.contact}</p>
+      <p><strong>Status:</strong> ${item.status}</p>
+      <button onclick="deleteItemAdmin(${item.id})">🗑️ Delete</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+
 
 
 
@@ -517,6 +585,7 @@ function deleteMyItem(itemId) {
   alert("🗑️ Item deleted successfully.");
   displayMyItems(); // refresh the view
 }
+
 
 
 
