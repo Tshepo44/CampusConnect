@@ -437,63 +437,35 @@ function marketplaceAction(action) {
     const itemPrice = prompt("Enter the price of your item:");
     if (!itemPrice) return alert("❌ Item price required!");
 
-    // Create a hidden file input for image selection
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = "image/*";
-    fileInput.multiple = true;
-    fileInput.click();
+    // ✅ Confirm details before posting
+    let confirmMsg = `Please confirm your post details:\n\n` +
+      `👤 Name: ${sellerName}\n📞 Contact: ${contact}\n📍 Location: ${location}\n` +
+      `📦 Item: ${itemName}\n💰 Price: R${itemPrice}\n\n✅ Press OK to post`;
 
-    alert("📸 Please select up to 2 photos for your item.");
+    if (confirm(confirmMsg)) {
+      const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
+      if (!loggedInStudent) return alert("Please log in first!");
 
-    fileInput.onchange = (e) => {
-      const files = Array.from(e.target.files);
-      if (files.length === 0 || files.length > 2) {
-        alert("❌ You must upload at least 1 and at most 2 photos.");
-        return;
-      }
+      const items = JSON.parse(localStorage.getItem("items")) || [];
 
-      const readers = files.map(file => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      });
+      // No photos now
+      const newItem = {
+        id: Date.now(),
+        sellerNumber: loggedInStudent.studentNumber,
+        sellerName,
+        contact,
+        location,
+        itemName,
+        itemPrice,
+        status: "Pending",
+        createdAt: new Date().toISOString()
+      };
 
-      Promise.all(readers).then(images => {
-        // Display a summary before confirming
-        let confirmMsg = `Please confirm your post details:\n\n` +
-          `👤 Name: ${sellerName}\n📞 Contact: ${contact}\n📍 Location: ${location}\n` +
-          `📦 Item: ${itemName}\n💰 Price: R${itemPrice}\n\n✅ Press OK to post`;
+      items.push(newItem);
+      localStorage.setItem("items", JSON.stringify(items));
 
-        if (confirm(confirmMsg)) {
-          const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
-          if (!loggedInStudent) return alert("Please log in first!");
-
-          const items = JSON.parse(localStorage.getItem("items")) || [];
-
-          const newItem = {
-            id: Date.now(),
-            sellerNumber: loggedInStudent.studentNumber,
-            sellerName,
-            contact,
-            location,
-            itemName,
-            itemPrice,
-            images,
-            status: "Pending",
-            createdAt: new Date().toISOString()
-          };
-
-          items.push(newItem);
-          localStorage.setItem("items", JSON.stringify(items));
-
-          alert("✅ Post sent to admin for evaluation. Status: Pending.");
-        }
-      });
-    };
+      alert("✅ Post sent to admin for evaluation. Status: Pending.");
+    }
 
   } else if (action === "buy") {
     displayApprovedItems();
@@ -502,6 +474,7 @@ function marketplaceAction(action) {
     displayMyItems();
   }
 }
+
 
 
 
@@ -544,6 +517,7 @@ function deleteMyItem(itemId) {
   alert("🗑️ Item deleted successfully.");
   displayMyItems(); // refresh the view
 }
+
 
 
 
