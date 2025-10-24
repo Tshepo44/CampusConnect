@@ -142,6 +142,18 @@ textarea {
 }
 
 
+#marketSubButtons button {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#marketSubButtons button:hover {
+  background-color: #dcdcdc;
+}
+
 
 
 
