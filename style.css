@@ -167,40 +167,8 @@ textarea {
   margin-top: 8px;
 }
 
-/* ====== FIX: Admin Dashboard Button Alignment ====== */
-#adminDashboard {
-  text-align: center;
-  margin-top: 20px;
-}
 
-/* Make all main admin buttons appear in one row */
-#adminDashboard > button,
-#adminDashboard > div#marketplaceSection {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 5px;
-}
 
-/* Properly align the Market Posts dropdown buttons */
-#marketplaceSection {
-  position: relative;
-  display: inline-block;
-}
-
-#marketSubButtons {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 8px;
-  white-space: nowrap;
-}
-
-#marketSubButtons button {
-  display: inline-block;
-  margin: 3px;
-}
 
 
 
