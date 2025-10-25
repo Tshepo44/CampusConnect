@@ -485,8 +485,23 @@ function toggleMarketButtons() {
   }
 }
 
+// Track toggle state
+let pendingVisible = false;
+let approvedVisible = false;
+
 function displayPendingItemsAdmin() {
   const container = document.getElementById("adminContent");
+
+  // Toggle off if it's already visible
+  if (pendingVisible) {
+    container.innerHTML = ""; // hide content
+    pendingVisible = false;
+    return;
+  }
+
+  // Otherwise, show it
+  pendingVisible = true;
+  approvedVisible = false; // close the other view if open
   container.innerHTML = "<h3>🕓 Pending Marketplace Posts</h3>";
 
   const items = JSON.parse(localStorage.getItem("items")) || [];
@@ -516,6 +531,17 @@ function displayPendingItemsAdmin() {
 
 function displayApprovedItemsAdmin() {
   const container = document.getElementById("adminContent");
+
+  // Toggle off if it's already visible
+  if (approvedVisible) {
+    container.innerHTML = "";
+    approvedVisible = false;
+    return;
+  }
+
+  // Otherwise, show it
+  approvedVisible = true;
+  pendingVisible = false; // close pending view if open
   container.innerHTML = "<h3>✅ Approved Marketplace Posts</h3>";
 
   const items = JSON.parse(localStorage.getItem("items")) || [];
@@ -541,6 +567,7 @@ function displayApprovedItemsAdmin() {
     container.appendChild(div);
   });
 }
+
 
 
 
@@ -585,6 +612,7 @@ function deleteMyItem(itemId) {
   alert("🗑️ Item deleted successfully.");
   displayMyItems(); // refresh the view
 }
+
 
 
 
