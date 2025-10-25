@@ -10,261 +10,84 @@ body {
 h1, h2, h3 {
   color: #2c3e50;
   text-align: center;
+  margin: 8px 0;
 }
 
+.card {
+  background: white;
+  padding: 18px;
+  margin: 12px auto;
+  max-width: 900px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* Buttons */
 button {
   cursor: pointer;
   padding: 8px 12px;
-  margin: 5px 0;
+  margin: 5px 6px 5px 0;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   background-color: #3498db;
   color: white;
   font-weight: bold;
 }
+button:hover { background-color: #2980b9; }
 
-button:hover {
-  background-color: #2980b9;
-}
-
-input,
-select,
-textarea {
+/* Inputs */
+input, select, textarea {
   padding: 8px;
   margin: 5px 0;
   width: 95%;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.hidden {
-  display: none;
-}
+/* Hide control */
+.hidden { display: none; }
 
-
-
-/* ---------------------- HEADER & NAV ---------------------- */
-header {
-  background-color: #34495e;
-  color: white;
-  padding: 15px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-nav {
-  margin-top: 10px;
-}
-
-nav button {
-  margin: 0 5px;
-}
-
-
-
-/* ---------------------- SECTIONS ---------------------- */
+/* Layout for sections */
 section {
   background-color: white;
   margin: 20px auto;
-  padding: 20px;
+  padding: 18px;
   max-width: 900px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
-section input,
-section select,
-section textarea {
-  display: block;
-}
-
-#adminContent,
-#tutorList,
-#itemList,
-#groupList,
-#counsellorList,
-#tutorRequests {
-  margin-top: 15px;
-}
-
-div {
-  margin-bottom: 10px;
-}
-
-
-
-/* ---------------------- LOGIN ---------------------- */
-#login {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: #ecf0f1;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* ---------------------- TEXTAREAS ---------------------- */
-textarea {
-  width: 95%;
-  min-height: 60px;
-  resize: vertical;
-}
-
-
-
-/* ---------------------- ALERTS ---------------------- */
-.alert {
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.alert-success {
-  background-color: #2ecc71;
-  color: white;
-}
-
-.alert-error {
-  background-color: #e74c3c;
-  color: white;
-}
-
-
-
-/* ---------------------- LOGOUT BUTTON ---------------------- */
-#logoutBtn,
-#logoutBtn2 {
-  background-color: #e67e22;
-}
-
-#logoutBtn:hover,
-#logoutBtn2:hover {
-  background-color: #d35400;
-}
-
-
-
-/* ---------------------- RESPONSIVE ---------------------- */
-@media (max-width: 600px) {
-  nav button {
-    display: block;
-    margin: 5px 0;
-  }
-
-  section {
-    width: 95%;
-    margin: 10px auto;
-    padding: 15px;
-  }
-}
-
-
-
-#adminDashboard button {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  padding: 8px 12px;
-}
-
-/* ====== FIX: Admin Dashboard Button Row ====== */
-#adminDashboard {
-  text-align: center;
-}
-
-
-
-#adminDashboard > button,
-#adminDashboard > div#marketplaceSection {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 5px;
-}
-
-/* Keep the sub-buttons below Market Posts */
-#marketplaceSection {
-  position: relative;
-}
-
-
-
-#marketSubButtons {
-  display: none;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 8px;
-}
-
-/* ====== Admin Dashboard layout (main row stays in one line) ====== */
-#adminDashboard {
-  position: relative; /* anchor for absolute-positioned submenu */
-  text-align: center;
-  margin-top: 20px;
-}
-
-
-
-/* keep main buttons inline in a single row */
-#adminDashboard > button,
-#adminDashboard > div#marketplaceSection {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 5px;
-}
-
-/* Marketplace section itself stays inline */
-#marketplaceSection {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-
-
-/* ====== SUB-BUTTONS: place below entire row, shifted left ====== */
-/* hidden by default; will be toggled with JS by setting display:block */
-#marketSubButtons {
-  display: none; /* toggled by toggleMarketButtons() */
-  position: absolute; /* position relative to #adminDashboard */
-  top: calc(100% + 12px); /* JUST below the entire admin button row */
-  left: 8%; /* push the sub-buttons further left under the row */
-  transform: none; /* no centering transform — we want left alignment */
-  white-space: nowrap; /* keep buttons on one line */
-  z-index: 50; /* ensure it sits above other content */
-}
-
-
-
-/* style for the sub-buttons so they appear in one row */
-#marketSubButtons button {
-  display: inline-block;
-  margin-right: 8px;
-  margin-bottom: 4px;
-}
-
-
-
-/* ✅ FIX: Ensure admin content appears clearly below buttons */
+/* Admin content area */
 #adminContent {
-  margin-top: 60px; /* pushes posts further down */
-  padding-top: 20px;
-  clear: both;
-  position: relative;
-  z-index: 1; /* keeps it above background but below floating buttons */
+  margin-top: 16px;
 }
 
-
-
-/* Optional: little divider line for clarity */
-#adminDashboard::after {
-  content: "";
-  display: block;
-  width: 80%;
-  height: 2px;
-  background-color: #ddd;
-  margin: 20px auto 0 auto;
-  border-radius: 2px;
+/* Group card states (classes you asked to separate) */
+.pending {
+  background-color: #fff7e6;
+  border-color: #ffecb3;
 }
+.approved {
+  background-color: #e9f7ef;
+  border-color: #c3e6cb;
+}
+.rejected {
+  background-color: #fdecea;
+  border-color: #f5c6cb;
+}
+
+/* small adjustments */
+.request-box, .group-card {
+  margin-bottom: 8px;
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  section { width: 95%; margin: 10px auto; padding: 12px; }
+  button { width: 100%; margin-bottom: 8px; }
+}
+
 
 
 
