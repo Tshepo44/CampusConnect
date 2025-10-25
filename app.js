@@ -24,6 +24,8 @@ function logout() {
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   document.getElementById("home").classList.remove("hidden");
   document.getElementById("logoutBtn").classList.add("hidden");
+  document.getElementById("loginBtn").onclick = login;
+
 }
 
 // ---------------------- LOGIN ----------------------
@@ -926,6 +928,7 @@ window.onload = () => {
     else showStudentServices();
   }
 };
+
 
 
 
