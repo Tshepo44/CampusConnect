@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Campus Connect</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
@@ -16,17 +16,17 @@
     <h2>Welcome to Campus Connect</h2>
     <p>Your all-in-one student portal for learning, trading, and connecting!</p>
 
-    <div>
+    <div class="card">
       <h3>Student Login</h3>
-      <input id="studentNumber" placeholder="Student Number">
-      <input id="password" type="password" placeholder="Password">
+      <input id="studentNumber" placeholder="Student Number" />
+      <input id="password" type="password" placeholder="Password" />
       <button onclick="login('student')">Login as Student</button>
     </div>
 
-    <div>
+    <div class="card">
       <h3>Admin Login</h3>
-      <input id="adminUsername" placeholder="Username">
-      <input id="adminPassword" type="password" placeholder="Password">
+      <input id="adminUsername" placeholder="Username" />
+      <input id="adminPassword" type="password" placeholder="Password" />
       <button onclick="login('admin')">Login as Admin</button>
     </div>
   </section>
@@ -39,15 +39,15 @@
       <button onclick="studentTutorRequest()">Request Tutor Help</button>
     </div>
 
-    <div id="tutorAdminView">
-      <button onclick="showAddTutor()">Add Tutor</button>
+    <div id="tutorAdminView" style="display:none;">
+      <button onclick="openTutorManagement()">Tutor Management</button>
     </div>
 
-    <div id="addTutorForm" class="hidden">
-      <input id="tutorName" placeholder="Name">
-      <input id="tutorCampus" placeholder="Campus">
-      <input id="tutorCourse" placeholder="Course">
-      <input id="tutorModule" placeholder="Module">
+    <div id="addTutorForm" class="hidden card">
+      <input id="tutorName" placeholder="Name" />
+      <input id="tutorCampus" placeholder="Campus" />
+      <input id="tutorCourse" placeholder="Course" />
+      <input id="tutorModule" placeholder="Module" />
       <button onclick="addTutor()">Save Tutor</button>
     </div>
 
@@ -65,25 +65,29 @@
       <button onclick="marketplaceAction('view')">View My Posted Items</button>
     </div>
 
-    <div id="marketplaceAdminView">
-      <button onclick="displayAllItemsAdmin()">View All Items</button>
+    <div id="marketplaceAdminView" style="display:none;">
+      <button id="marketToggleBtn" onclick="toggleMarketButtons()"> Market Posts</button>
+      <div id="marketSubButtons" style="display:none; margin-top:10px;">
+        <button onclick="displayPendingItemsAdmin()"> 🕓 View Pending Posts</button>
+        <button onclick="displayApprovedItemsAdmin()"> ✅ View Approved Posts</button>
+      </div>
     </div>
 
-    <div id="marketplaceForm" class="hidden">
-      <input id="itemName" placeholder="Item Name">
+    <div id="marketplaceForm" class="hidden card">
+      <input id="itemName" placeholder="Item Name" />
       <select id="itemType">
-        <option value="Study Material">Study Material</option>
-        <option value="Clothing">Clothing</option>
-        <option value="Furniture">Furniture</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Musical Instruments">Musical Instruments</option>
-        <option value="Artwork">Artwork</option>
-        <option value="Craft">Craft</option>
+        <option>Study Material</option>
+        <option>Clothing</option>
+        <option>Furniture</option>
+        <option>Electronics</option>
+        <option>Musical Instruments</option>
+        <option>Artwork</option>
+        <option>Craft</option>
       </select>
-      <input id="itemPrice" placeholder="Price">
-      <input id="itemLocation" placeholder="Location">
-      <input id="itemContact" placeholder="Email/Cell">
-      <input type="file" id="itemPhotos" multiple accept="image/*">
+      <input id="itemPrice" placeholder="Price" />
+      <input id="itemLocation" placeholder="Location" />
+      <input id="itemContact" placeholder="Email/Cell" />
+      <input type="file" id="itemPhotos" multiple accept="image/*" />
       <button onclick="addItem()">Post Item</button>
     </div>
 
@@ -97,74 +101,40 @@
     <div id="groupStudentView">
       <button onclick="studyGroupAction('create')">Create Study Group</button>
       <button onclick="studyGroupAction('search')">Look for Study Group</button>
+      <button onclick="studyGroupAction('my')">My Posted Study Groups</button>
     </div>
 
-    <div id="groupAdminView">
-      <button onclick="displayAllGroupsAdmin()">View All Groups</button>
+    <div id="groupAdminView" style="display:none;">
+      <button onclick="toggleStudyGroupButtons()"> 📚 Study Groups </button>
+      <div id="studyGroupSubButtons" style="display:none; margin-top:10px;">
+        <button onclick="togglePendingGroupsAdmin()">🕓 View Pending Study Groups</button>
+        <button onclick="toggleApprovedGroupsAdmin()">✅ View Approved Study Groups</button>
+      </div>
     </div>
 
-    <div id="groupForm" class="hidden">
-      <input id="groupCourse" placeholder="Course">
-      <input id="groupModule" placeholder="Module">
-      <input id="groupOrganizerName" placeholder="Organizer Name">
-      <input id="groupCampus" placeholder="Campus">
-      <input id="groupContact" placeholder="Cell/Email">
+    <div id="groupForm" class="hidden card">
+      <input id="groupCourse" placeholder="Course" />
+      <input id="groupModule" placeholder="Module" />
+      <input id="groupOrganizerName" placeholder="Organizer Name" />
+      <input id="groupCampus" placeholder="Campus" />
+      <input id="groupContact" placeholder="Cell/Email" />
       <button onclick="addGroup()">Post Group</button>
     </div>
 
     <div id="groupList"></div>
   </section>
 
-  <!-- Counselling Section -->
+  <!-- Counselling Section (placeholder) -->
   <section id="counselling" class="hidden">
     <h2>Counselling</h2>
-
-    <div id="counsellingStudentView">
-      <button onclick="counsellingAction()">Request Counselling</button>
-    </div>
-
-    <div id="counsellingAdminView">
-      <button onclick="displayAllCounsellingAdmin()">View Counselling Requests</button>
-    </div>
-
-    <div id="counsellingForm" class="hidden">
-      <input id="counsellorCampus" placeholder="Campus">
-      <select id="counsellorIssue">
-        <option value="Mental Health">Mental Health</option>
-        <option value="Relationship Issues">Relationship Issues</option>
-        <option value="Academic Struggles">Academic Struggles</option>
-        <option value="Career Development">Career Development</option>
-        <option value="Personal Growth">Personal Growth</option>
-        <option value="Campus Life Adjustments">Campus Life Adjustments</option>
-        <option value="Grief/Loss">Grief/Loss</option>
-        <option value="Substance Abuse/Addiction">Substance Abuse/Addiction</option>
-      </select>
-      <select id="counsellorSessionType">
-        <option value="Online">Online</option>
-        <option value="In-person">In-person</option>
-      </select>
-      <button onclick="requestCounselling()">Send Request</button>
-    </div>
-
-    <div id="counsellingList"></div>
+    <p>Feature coming soon...</p>
   </section>
 
   <!-- Admin Dashboard -->
   <section id="adminDashboard" class="hidden">
     <h2>Admin Dashboard</h2>
-
     <button onclick="displayTutorRequestsAdmin()">Tutor Requests</button>
-
-    <!-- Marketplace Management Section -->
-    <div id="marketplaceSection">
-      <button id="marketToggleBtn" onclick="toggleMarketButtons()">Market Posts</button>
-      <div id="marketSubButtons" style="display:none; margin-top:10px;">
-        <button onclick="displayPendingItemsAdmin()">🕓 View Pending Posts</button>
-        <button onclick="displayApprovedItemsAdmin()">✅ View Approved Posts</button>
-      </div>
-    </div>
-
-    <button onclick="displayAllGroupsAdmin()">Study Groups</button>
+    <button onclick="displayAllGroupsAdmin()">All Study Groups</button>
     <button onclick="displayAllCounsellingAdmin()">Counselling Requests</button>
     <button onclick="openTutorManagement()">Tutor Management</button>
 
@@ -172,11 +142,13 @@
     <div id="tutorRequestsAdmin"></div>
   </section>
 
-  <button id="logoutBtn2" onclick="logout()" style="margin-top:20px;">Logout</button>
+  <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
 
   <script src="app.js"></script>
 </body>
 </html>
+
+
 
 
 
