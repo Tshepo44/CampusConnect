@@ -932,6 +932,54 @@ window.onload = () => {
 
 
 
+// ---------------------- SHOW PORTALS ----------------------
+function showStudentServices() {
+  // Hide login and admin sections
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("adminDashboard").classList.add("hidden");
+
+  // Show student sections
+  document.getElementById("tutors").classList.remove("hidden");
+  document.getElementById("marketplace").classList.remove("hidden");
+  document.getElementById("groups").classList.remove("hidden");
+
+  // Show/hide student/admin views
+  document.getElementById("tutorStudentView").style.display = "block";
+  document.getElementById("tutorAdminView").style.display = "none";
+  document.getElementById("marketplaceStudentView").style.display = "block";
+  document.getElementById("marketplaceAdminView").style.display = "none";
+  document.getElementById("groupStudentView").style.display = "block";
+  document.getElementById("groupAdminView").style.display = "none";
+}
+
+function showAdminServices() {
+  // Hide login and student sections
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("tutors").classList.add("hidden");
+  document.getElementById("marketplace").classList.add("hidden");
+  document.getElementById("groups").classList.add("hidden");
+
+  // Show admin dashboard
+  document.getElementById("adminDashboard").classList.remove("hidden");
+
+  // Show/hide admin views in sections
+  document.getElementById("tutorStudentView").style.display = "none";
+  document.getElementById("tutorAdminView").style.display = "block";
+  document.getElementById("marketplaceStudentView").style.display = "none";
+  document.getElementById("marketplaceAdminView").style.display = "block";
+  document.getElementById("groupStudentView").style.display = "none";
+  document.getElementById("groupAdminView").style.display = "block";
+}
+
+// ---------------------- LOGOUT ----------------------
+function logout() {
+  // Reload page to reset everything
+  location.reload();
+}
+
+
+
+
 
 
 
