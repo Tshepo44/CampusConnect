@@ -208,6 +208,26 @@ textarea {
 }
 
 
+/* ✅ FIX: Ensure admin content appears clearly below buttons */
+#adminContent {
+  margin-top: 60px;           /* pushes posts further down */
+  padding-top: 20px;
+  clear: both;
+  position: relative;
+  z-index: 1;                 /* keeps it above background but below floating buttons */
+}
+
+/* Optional: little divider line for clarity */
+#adminDashboard::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 2px;
+  background-color: #ddd;
+  margin: 20px auto 0 auto;
+  border-radius: 2px;
+}
+
 
 
 
