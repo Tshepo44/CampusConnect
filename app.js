@@ -529,6 +529,50 @@ function displayPendingItemsAdmin() {
   });
 }
 
+// ---------- Admin: Approve item ----------
+function approveItem(itemId) {
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  const index = items.findIndex(i => i.id === itemId);
+  if (index === -1) return alert("Item not found.");
+
+  items[index].status = "Approved";
+  items[index].adminNote = "Approved by admin.";
+  items[index].sellerNotified = false; // will trigger seller alert next time they view their items
+  localStorage.setItem("items", JSON.stringify(items));
+
+  alert("✅ Post is now accepted and will appear for students to see.");
+  // refresh the pending list currently shown in admin
+  if (typeof displayPendingItemsAdmin === "function") displayPendingItemsAdmin();
+}
+
+// ---------- Admin: Reject item ----------
+function rejectItem(itemId) {
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  const index = items.findIndex(i => i.id === itemId);
+  if (index === -1) return alert("Item not found.");
+
+  const note = prompt("Enter a reason for rejection (optional):");
+  items[index].status = "Rejected";
+  items[index].adminNote = note || "No reason provided.";
+  items[index].sellerNotified = false;
+  localStorage.setItem("items", JSON.stringify(items));
+
+  alert("❌ Item rejected.");
+  if (typeof displayPendingItemsAdmin === "function") displayPendingItemsAdmin();
+}
+
+// ---------- Admin: Delete any item ----------
+function deleteItemAdmin(itemId) {
+  if (!confirm("Are you sure you want to delete this post?")) return;
+  let items = JSON.parse(localStorage.getItem("items")) || [];
+  items = items.filter(i => i.id !== itemId);
+  localStorage.setItem("items", JSON.stringify(items));
+  alert("🗑️ Post deleted successfully.");
+  if (typeof displayApprovedItemsAdmin === "function") displayApprovedItemsAdmin();
+  if (typeof displayPendingItemsAdmin === "function") displayPendingItemsAdmin();
+}
+
+
 function displayApprovedItemsAdmin() {
   const container = document.getElementById("adminContent");
 
@@ -573,6 +617,7 @@ function displayApprovedItemsAdmin() {
 
 
 
+// ---------- Student: View My Posted Items (REPLACED) ----------
 function displayMyItems() {
   const container = document.getElementById("itemList");
   const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
@@ -590,18 +635,33 @@ function displayMyItems() {
   }
 
   myItems.forEach(item => {
-    const photosHTML = item.photos.map(p => `<img src="${p}" width="80" height="80" style="margin:3px;border-radius:8px;">`).join("");
+    // If admin just approved and seller hasn't been notified, show alert and mark notified
+    if (item.status === "Approved" && !item.sellerNotified) {
+      alert(`✅ Your post "${item.itemName}" was approved and is now visible to buyers.`);
+      // mark as notified so we don't alert again
+      const allItems = JSON.parse(localStorage.getItem("items")) || [];
+      const idx = allItems.findIndex(it => it.id === item.id);
+      if (idx !== -1) {
+        allItems[idx].sellerNotified = true;
+        localStorage.setItem("items", JSON.stringify(allItems));
+        // update local reference so delete/hide uses latest
+        item.sellerNotified = true;
+      }
+    }
+
     container.innerHTML += `
       <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
         <p><strong>Item:</strong> ${item.itemName}</p>
         <p><strong>Price:</strong> R${item.itemPrice}</p>
+        <p><strong>Location:</strong> ${item.location}</p>
+        <p><strong>Contact:</strong> ${item.contact}</p>
         <p><strong>Status:</strong> ${item.status}</p>
-        <div>${photosHTML}</div>
         <button onclick="deleteMyItem(${item.id})">🗑️ Delete</button>
       </div>
     `;
   });
 }
+
 
 function deleteMyItem(itemId) {
   if (!confirm("Are you sure you want to delete this item?")) return;
@@ -612,6 +672,32 @@ function deleteMyItem(itemId) {
   alert("🗑️ Item deleted successfully.");
   displayMyItems(); // refresh the view
 }
+
+// ---------- Student: View Approved Items (Buy screen) ----------
+function displayApprovedItems() {
+  const container = document.getElementById("itemList");
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  const approved = items.filter(i => i.status === "Approved");
+
+  container.innerHTML = "<h3>🛍️ Available Items</h3>";
+
+  if (approved.length === 0) {
+    container.innerHTML += "<p>No items available for now.</p>";
+    return;
+  }
+
+  approved.forEach(item => {
+    container.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+        <p><strong>Item:</strong> ${item.itemName}</p>
+        <p><strong>Price:</strong> R${item.itemPrice}</p>
+        <p><strong>Location:</strong> ${item.location}</p>
+        <p><strong>Contact:</strong> ${item.contact}</p>
+      </div>
+    `;
+  });
+}
+
 
 
 
