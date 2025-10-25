@@ -928,43 +928,108 @@ function deleteMyGroup(groupId) {
 
 /* ---------------------- ADMIN: Study Group management ---------------------- */
 
-/* Admin: toggle and show pending groups (for approval/rejection) */
-function displayPendingGroupsAdmin() {
-  ensureGroupsInit();
-  const container = document.getElementById("adminContent");
-  // toggle
-  pendingGroupsVisibleAdmin = !pendingGroupsVisibleAdmin;
-  if (!pendingGroupsVisibleAdmin) {
-    container.innerHTML = "";
-    return;
-  }
+// ---------------- ADMIN: View Pending Groups ----------------
+let pendingVisible = false; // track toggle state
 
-  // show pending
+function togglePendingGroupsAdmin() {
+  const container = document.getElementById("adminContent");
+
+  if (!pendingVisible) {
+    const groups = JSON.parse(localStorage.getItem("groups")) || [];
+    const pending = groups.filter(g => g.status === "Pending");
+
+    if (pending.length === 0) {
+      container.innerHTML = "<p>No pending study groups.</p>";
+      return;
+    }
+
+    let html = "<h3>Pending Study Groups</h3>";
+    pending.forEach((g, index) => {
+      html += `
+        <div class="pending-group" style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+          <p><b>Course:</b> ${g.course}</p>
+          <p><b>Module:</b> ${g.module}</p>
+          <p><b>Organizer:</b> ${g.organizer}</p>
+          <p><b>Campus:</b> ${g.campus}</p>
+          <p><b>Contact:</b> ${g.contact}</p>
+          <button onclick="approveGroup(${index})">Approve</button>
+          <button onclick="rejectGroupWithReason(${index})">Reject</button>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+    pendingVisible = true;
+  } else {
+    container.innerHTML = ""; // hide
+    pendingVisible = false;
+  }
+}
+
+function rejectGroupWithReason(index) {
   const groups = JSON.parse(localStorage.getItem("groups")) || [];
   const pending = groups.filter(g => g.status === "Pending");
 
-  container.innerHTML = "<h3>🕓 Pending Study Groups</h3>";
-  if (pending.length === 0) {
-    container.innerHTML += "<p>No pending study groups.</p>";
-    return;
-  }
+  if (pending[index]) {
+    const reason = prompt("Enter rejection reason for this study group:");
+    if (reason && reason.trim() !== "") {
+      const groupToReject = pending[index];
+      const actualIndex = groups.findIndex(g => g.course === groupToReject.course && g.module === groupToReject.module);
+      groups[actualIndex].status = "Rejected";
+      groups[actualIndex].rejectionMessage = reason.trim();
 
-  pending.forEach(g => {
-    const div = document.createElement("div");
-    div.style = "border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;";
-    div.innerHTML = `
-      <p><strong>Course:</strong> ${g.course}</p>
-      <p><strong>Module:</strong> ${g.module}</p>
-      <p><strong>Organizer:</strong> ${g.organizer}</p>
-      <p><strong>Campus:</strong> ${g.campus}</p>
-      <p><strong>Contact:</strong> ${g.contact}</p>
-      <p><strong>Posted by:</strong> ${g.studentNumber}</p>
-      <button onclick="approveGroup(${g.id})">✅ Approve</button>
-      <button onclick="rejectGroup(${g.id})">❌ Reject</button>
-    `;
-    container.appendChild(div);
-  });
+      localStorage.setItem("groups", JSON.stringify(groups));
+      alert("Study group rejected and student notified.");
+      togglePendingGroupsAdmin(); // refresh list
+    }
+  }
 }
+
+// ---------------- ADMIN: View Approved Groups ----------------
+let approvedVisible = false;
+
+function toggleApprovedGroupsAdmin() {
+  const container = document.getElementById("adminContent");
+
+  if (!approvedVisible) {
+    const groups = JSON.parse(localStorage.getItem("groups")) || [];
+    const approved = groups.filter(g => g.status === "Approved");
+
+    if (approved.length === 0) {
+      container.innerHTML = "<p>No approved study groups.</p>";
+      return;
+    }
+
+    let html = "<h3>Approved Study Groups</h3>";
+    approved.forEach((g, index) => {
+      html += `
+        <div class="approved-group" style="border:1px solid green;padding:10px;margin:10px;border-radius:10px;">
+          <p><b>Course:</b> ${g.course}</p>
+          <p><b>Module:</b> ${g.module}</p>
+          <p><b>Organizer:</b> ${g.organizer}</p>
+          <p><b>Campus:</b> ${g.campus}</p>
+          <p><b>Contact:</b> ${g.contact}</p>
+          <button onclick="deleteApprovedGroupAdmin('${g.course}','${g.module}')">Delete</button>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+    approvedVisible = true;
+  } else {
+    container.innerHTML = ""; // hide
+    approvedVisible = false;
+  }
+}
+
+function deleteApprovedGroupAdmin(course, module) {
+  let groups = JSON.parse(localStorage.getItem("groups")) || [];
+  groups = groups.filter(g => !(g.course === course && g.module === module));
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("Approved study group deleted.");
+  toggleApprovedGroupsAdmin();
+}
+
 
 /* Admin: approve a pending group */
 function approveGroup(groupId) {
@@ -1071,6 +1136,7 @@ function openGroupsOnLogin() {
 
 /* When page loads ensure groups exist (keeps data structure consistent) */
 ensureGroupsInit();
+
 
 
 
