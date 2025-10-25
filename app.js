@@ -420,7 +420,13 @@ function deleteStudentRequest(index) {
   displayStudentTutorRequests();
 }
 
+// --- Student marketplace section toggles ---
+let buyVisible = false;
+let myPostsVisible = false;
+
 function marketplaceAction(action) {
+  const container = document.getElementById("itemList");
+
   if (action === "sell") {
     const sellerName = prompt("Enter your full name (Name and Surname):");
     if (!sellerName) return alert("❌ Seller name required!");
@@ -467,13 +473,40 @@ function marketplaceAction(action) {
       alert("✅ Post sent to admin for evaluation. Status: Pending.");
     }
 
-  } else if (action === "buy") {
-    displayApprovedItems();
+    // Reset toggles so the sell action doesn’t interfere
+    buyVisible = false;
+    myPostsVisible = false;
+    container.innerHTML = "";
+    return;
+  }
 
-  } else if (action === "view") {
+  // 🛒 Toggle Buy Item posts
+  if (action === "buy") {
+    if (buyVisible) {
+      container.innerHTML = ""; // Hide if already visible
+      buyVisible = false;
+      return;
+    }
+    displayApprovedItems();
+    buyVisible = true;
+    myPostsVisible = false; // Close the other section
+    return;
+  }
+
+  // 👤 Toggle View My Posted Items
+  if (action === "view") {
+    if (myPostsVisible) {
+      container.innerHTML = ""; // Hide if already visible
+      myPostsVisible = false;
+      return;
+    }
     displayMyItems();
+    myPostsVisible = true;
+    buyVisible = false; // Close the other section
+    return;
   }
 }
+
 
 function toggleMarketButtons() {
   const subBtns = document.getElementById("marketSubButtons");
@@ -699,6 +732,7 @@ function displayApprovedItems() {
     `;
   });
 }
+
 
 
 
