@@ -1137,6 +1137,14 @@ function openGroupsOnLogin() {
 /* When page loads ensure groups exist (keeps data structure consistent) */
 ensureGroupsInit();
 
+// ---------------------- STUDY GROUP ADMIN BUTTON TOGGLE ----------------------
+function toggleStudyGroupButtons() {
+  const subButtons = document.getElementById("studyGroupSubButtons");
+  subButtons.style.display = subButtons.style.display === "none" ? "block" : "none";
+}
+
+
+
 
 
 
