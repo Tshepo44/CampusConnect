@@ -894,7 +894,12 @@ function displayMyGroups() {
     return;
   }
 
-  my.forEach((g, idx) => {
+  my.forEach((g) => {
+    let statusColor = "black"; // default
+    if (g.status === "Pending") statusColor = "orange";
+    if (g.status === "Approved") statusColor = "green";
+    if (g.status === "Rejected") statusColor = "red";
+
     groupList.innerHTML += `
       <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
         <p><strong>Course:</strong> ${g.course}</p>
@@ -902,13 +907,14 @@ function displayMyGroups() {
         <p><strong>Organizer:</strong> ${g.organizer}</p>
         <p><strong>Campus:</strong> ${g.campus}</p>
         <p><strong>Contact:</strong> ${g.contact}</p>
-        <p><strong>Status:</strong> ${g.status}${g.status === "Approved" ? " ✅ Approved and visible to all students" : ""}</p>
+        <p style="color:${statusColor};"><strong>Status:</strong> ${g.status}</p>
         ${g.status === "Rejected" && g.rejectionReason ? `<p><strong>Reason:</strong> ${g.rejectionReason}</p>` : ""}
-        <button onclick="deleteMyGroup(${g.id})">🗑️ Delete</button>
+        ${(g.status === "Approved" || g.status === "Rejected") ? `<button onclick="deleteMyGroup(${g.id})">🗑️ Delete</button>` : ""}
       </div>
     `;
   });
 }
+
 
 /* Student: delete their own group */
 function deleteMyGroup(groupId) {
@@ -1142,6 +1148,7 @@ function toggleStudyGroupButtons() {
   const subButtons = document.getElementById("studyGroupSubButtons");
   subButtons.style.display = subButtons.style.display === "none" ? "block" : "none";
 }
+
 
 
 
