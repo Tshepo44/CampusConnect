@@ -82,6 +82,7 @@
  </section> 
  
  <!-- Study Groups Section --> 
+ 
  <section id="groups" class="hidden"> 
    <h2>Study Groups</h2> 
    <div id="groupStudentView"> 
@@ -148,7 +149,15 @@
     </div>
   </div>
 
-  <button onclick="displayAllGroupsAdmin()">Study Groups</button>
+  <!-- Study Groups Management Section -->
+<div id="studyGroupsSection">
+  <button id="studyGroupToggleBtn" onclick="toggleStudyGroupButtons()">📚 Study Groups</button>
+  <div id="studyGroupSubButtons" style="display:none; margin-top:10px;">
+    <button onclick="togglePendingGroupsAdmin()">🕓 View Pending Study Groups</button>
+    <button onclick="toggleApprovedGroupsAdmin()">✅ View Approved Study Groups</button>
+  </div>
+</div>
+
   <button onclick="displayAllCounsellingAdmin()">Counselling Requests</button>
   <button onclick="openTutorManagement()">Tutor Management</button>
   <div id="adminContent"></div>
@@ -167,6 +176,7 @@
  <script src="app.js"></script> 
 </body> 
 </html>
+
 
 
 
