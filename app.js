@@ -734,6 +734,345 @@ function displayApprovedItems() {
 }
 
 
+/* ---------------------- STUDY GROUPS FEATURE ---------------------- */
+
+/* Toggle states for student/admin views */
+let groupFormVisible = false;
+let groupSearchVisible = false;
+let myGroupsVisible = false;
+let pendingGroupsVisibleAdmin = false;
+let approvedGroupsVisibleAdmin = false;
+
+/* Helper: ensure groups array exists */
+function ensureGroupsInit() {
+  if (!localStorage.getItem("groups")) {
+    localStorage.setItem("groups", JSON.stringify([]));
+  }
+}
+
+/* Student: show/hide the small create form or search results */
+function studyGroupAction(action) {
+  ensureGroupsInit();
+  const groupForm = document.getElementById("groupForm");
+  const groupList = document.getElementById("groupList");
+
+  if (action === "create") {
+    // Toggle show/hide create form
+    groupFormVisible = !groupFormVisible;
+    if (groupFormVisible) {
+      groupForm.classList.remove("hidden");
+      // hide other lists
+      groupList.innerHTML = "";
+      groupSearchVisible = false;
+      myGroupsVisible = false;
+    } else {
+      groupForm.classList.add("hidden");
+    }
+    return;
+  }
+
+  if (action === "search") {
+    // Toggle approved groups list (visible to students)
+    groupSearchVisible = !groupSearchVisible;
+    if (!groupSearchVisible) {
+      groupList.innerHTML = "";
+      return;
+    }
+    // show all approved groups
+    displayApprovedGroups();
+    // hide form and mygroups
+    groupForm.classList.add("hidden");
+    groupFormVisible = false;
+    myGroupsVisible = false;
+    return;
+  }
+
+  if (action === "my") {
+    // Toggle Student's posted groups
+    myGroupsVisible = !myGroupsVisible;
+    if (!myGroupsVisible) {
+      groupList.innerHTML = "";
+      return;
+    }
+    displayMyGroups();
+    // close others
+    groupForm.classList.add("hidden");
+    groupFormVisible = false;
+    groupSearchVisible = false;
+    return;
+  }
+}
+
+/* Student: add a group (called by your existing Post Group button) */
+function addGroup() {
+  ensureGroupsInit();
+  const logged = JSON.parse(localStorage.getItem("loggedInStudent"));
+  if (!logged || logged.role !== "student") return alert("Please log in as a student to create a study group.");
+
+  const course = document.getElementById("groupCourse").value.trim();
+  const module = document.getElementById("groupModule").value.trim();
+  const organizer = document.getElementById("groupOrganizerName").value.trim();
+  const campus = document.getElementById("groupCampus").value.trim();
+  const contact = document.getElementById("groupContact").value.trim();
+
+  if (!course || !module || !organizer || !campus || !contact) {
+    return alert("❌ Please fill in all study group fields.");
+  }
+
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const newGroup = {
+    id: Date.now(),
+    studentNumber: logged.studentNumber,
+    course,
+    module,
+    organizer,
+    campus,
+    contact,
+    status: "Pending", // initial
+    createdAt: new Date().toISOString()
+  };
+
+  groups.push(newGroup);
+  localStorage.setItem("groups", JSON.stringify(groups));
+
+  // clear form UI and feedback
+  document.getElementById("groupCourse").value = "";
+  document.getElementById("groupModule").value = "";
+  document.getElementById("groupOrganizerName").value = "";
+  document.getElementById("groupCampus").value = "";
+  document.getElementById("groupContact").value = "";
+  document.getElementById("groupForm").classList.add("hidden");
+  groupFormVisible = false;
+
+  alert("✅ Your study group has been submitted for admin approval.");
+  // Optionally show student's groups immediately
+  displayMyGroups();
+  myGroupsVisible = true;
+}
+
+/* Student: display all Approved groups (search / Look for Study Group) */
+function displayApprovedGroups() {
+  ensureGroupsInit();
+  const groupList = document.getElementById("groupList");
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const approved = groups.filter(g => g.status === "Approved");
+
+  groupList.innerHTML = "<h3>✅ Approved Study Groups</h3>";
+  if (approved.length === 0) {
+    groupList.innerHTML += "<p>No approved study groups found.</p>";
+    return;
+  }
+
+  approved.forEach(g => {
+    groupList.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+        <p><strong>Course:</strong> ${g.course}</p>
+        <p><strong>Module:</strong> ${g.module}</p>
+        <p><strong>Organizer:</strong> ${g.organizer}</p>
+        <p><strong>Campus:</strong> ${g.campus}</p>
+        <p><strong>Contact:</strong> ${g.contact}</p>
+        ${/* future join button placeholder */""}
+        <button onclick="alert('Join feature coming soon!')">Join (coming soon)</button>
+      </div>
+    `;
+  });
+}
+
+/* Student: display all groups created by the logged-in student (My Posted Study Groups) */
+function displayMyGroups() {
+  ensureGroupsInit();
+  const logged = JSON.parse(localStorage.getItem("loggedInStudent"));
+  const groupList = document.getElementById("groupList");
+  if (!logged || logged.role !== "student") return alert("Please log in as a student.");
+
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const my = groups.filter(g => g.studentNumber === logged.studentNumber);
+
+  groupList.innerHTML = "<h3>🧾 My Study Groups</h3>";
+  if (my.length === 0) {
+    groupList.innerHTML += "<p>You haven't posted any study groups yet.</p>";
+    return;
+  }
+
+  my.forEach((g, idx) => {
+    groupList.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+        <p><strong>Course:</strong> ${g.course}</p>
+        <p><strong>Module:</strong> ${g.module}</p>
+        <p><strong>Organizer:</strong> ${g.organizer}</p>
+        <p><strong>Campus:</strong> ${g.campus}</p>
+        <p><strong>Contact:</strong> ${g.contact}</p>
+        <p><strong>Status:</strong> ${g.status}${g.status === "Approved" ? " ✅ Approved and visible to all students" : ""}</p>
+        ${g.status === "Rejected" && g.rejectionReason ? `<p><strong>Reason:</strong> ${g.rejectionReason}</p>` : ""}
+        <button onclick="deleteMyGroup(${g.id})">🗑️ Delete</button>
+      </div>
+    `;
+  });
+}
+
+/* Student: delete their own group */
+function deleteMyGroup(groupId) {
+  if (!confirm("Are you sure you want to delete this study group?")) return;
+  let groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const logged = JSON.parse(localStorage.getItem("loggedInStudent"));
+  if (!logged || logged.role !== "student") return alert("Please log in.");
+
+  const group = groups.find(g => g.id === groupId && g.studentNumber === logged.studentNumber);
+  if (!group) return alert("Study group not found or you are not authorized.");
+
+  groups = groups.filter(g => g.id !== groupId);
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("🗑️ Study group deleted.");
+  displayMyGroups();
+}
+
+/* ---------------------- ADMIN: Study Group management ---------------------- */
+
+/* Admin: toggle and show pending groups (for approval/rejection) */
+function displayPendingGroupsAdmin() {
+  ensureGroupsInit();
+  const container = document.getElementById("adminContent");
+  // toggle
+  pendingGroupsVisibleAdmin = !pendingGroupsVisibleAdmin;
+  if (!pendingGroupsVisibleAdmin) {
+    container.innerHTML = "";
+    return;
+  }
+
+  // show pending
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const pending = groups.filter(g => g.status === "Pending");
+
+  container.innerHTML = "<h3>🕓 Pending Study Groups</h3>";
+  if (pending.length === 0) {
+    container.innerHTML += "<p>No pending study groups.</p>";
+    return;
+  }
+
+  pending.forEach(g => {
+    const div = document.createElement("div");
+    div.style = "border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;";
+    div.innerHTML = `
+      <p><strong>Course:</strong> ${g.course}</p>
+      <p><strong>Module:</strong> ${g.module}</p>
+      <p><strong>Organizer:</strong> ${g.organizer}</p>
+      <p><strong>Campus:</strong> ${g.campus}</p>
+      <p><strong>Contact:</strong> ${g.contact}</p>
+      <p><strong>Posted by:</strong> ${g.studentNumber}</p>
+      <button onclick="approveGroup(${g.id})">✅ Approve</button>
+      <button onclick="rejectGroup(${g.id})">❌ Reject</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+/* Admin: approve a pending group */
+function approveGroup(groupId) {
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const idx = groups.findIndex(g => g.id === groupId);
+  if (idx === -1) return alert("Group not found.");
+
+  groups[idx].status = "Approved";
+  groups[idx].adminNote = "Approved by admin.";
+  groups[idx].adminActionAt = new Date().toISOString();
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("✅ Study group approved and now visible to students.");
+
+  // Refresh pending list in admin view
+  if (typeof displayPendingGroupsAdmin === "function") displayPendingGroupsAdmin();
+}
+
+/* Admin: reject a pending group with reason */
+function rejectGroup(groupId) {
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const idx = groups.findIndex(g => g.id === groupId);
+  if (idx === -1) return alert("Group not found.");
+
+  const reason = prompt("Enter reason for rejection (required):");
+  if (reason === null) return; // cancelled
+  if (String(reason).trim() === "") return alert("Rejection reason required.");
+
+  groups[idx].status = "Rejected";
+  groups[idx].rejectionReason = reason.trim();
+  groups[idx].adminActionAt = new Date().toISOString();
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("❌ Study group rejected.");
+
+  if (typeof displayPendingGroupsAdmin === "function") displayPendingGroupsAdmin();
+}
+
+/* Admin: view all groups (approved + pending + rejected) */
+function displayAllGroupsAdmin() {
+  ensureGroupsInit();
+  const container = document.getElementById("adminContent");
+  // toggle simple show/hide (keeps small admin behavior consistent)
+  approvedGroupsVisibleAdmin = !approvedGroupsVisibleAdmin;
+  if (!approvedGroupsVisibleAdmin) {
+    container.innerHTML = "";
+    return;
+  }
+
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  if (groups.length === 0) {
+    container.innerHTML = "<h3>Study Groups</h3><p>No study groups found.</p>";
+    return;
+  }
+
+  container.innerHTML = "<h3>All Study Groups (Admin)</h3>";
+  groups.forEach(g => {
+    container.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+        <p><strong>ID:</strong> ${g.id}</p>
+        <p><strong>Course:</strong> ${g.course}</p>
+        <p><strong>Module:</strong> ${g.module}</p>
+        <p><strong>Organizer:</strong> ${g.organizer}</p>
+        <p><strong>Campus:</strong> ${g.campus}</p>
+        <p><strong>Contact:</strong> ${g.contact}</p>
+        <p><strong>Status:</strong> ${g.status}</p>
+        ${g.status === "Rejected" && g.rejectionReason ? `<p><strong>Reason:</strong> ${g.rejectionReason}</p>` : ""}
+        <button onclick="deleteGroupAdmin(${g.id})">🗑️ Delete</button>
+        ${g.status === "Approved" ? `<button onclick="unapproveGroup(${g.id})">Unapprove</button>` : ""}
+      </div>
+    `;
+  });
+}
+
+/* Admin: delete any group */
+function deleteGroupAdmin(groupId) {
+  if (!confirm("Delete this study group permanently?")) return;
+  let groups = JSON.parse(localStorage.getItem("groups")) || [];
+  groups = groups.filter(g => g.id !== groupId);
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("🗑️ Study group deleted.");
+  if (typeof displayAllGroupsAdmin === "function") displayAllGroupsAdmin();
+}
+
+/* Admin: unapprove -> set back to Pending (if you want admin control) */
+function unapproveGroup(groupId) {
+  const groups = JSON.parse(localStorage.getItem("groups")) || [];
+  const idx = groups.findIndex(g => g.id === groupId);
+  if (idx === -1) return alert("Group not found.");
+  groups[idx].status = "Pending";
+  groups[idx].adminNote = "Unapproved by admin.";
+  localStorage.setItem("groups", JSON.stringify(groups));
+  alert("🔁 Group unapproved and returned to Pending.");
+  if (typeof displayAllGroupsAdmin === "function") displayAllGroupsAdmin();
+}
+
+/* Quick helper: when a student logs in, if they navigate to groups show appropriate buttons */
+function openGroupsOnLogin() {
+  // if student is logged in and had previously posted groups, optionally show them
+  const logged = JSON.parse(localStorage.getItem("loggedInStudent"));
+  if (!logged) return;
+  if (logged.role === "student") {
+    // nothing automatic — student will press Look for Study Group or Create
+  }
+}
+
+/* When page loads ensure groups exist (keeps data structure consistent) */
+ensureGroupsInit();
+
+
 
 
 
