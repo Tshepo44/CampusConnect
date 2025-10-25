@@ -87,9 +87,12 @@
    <div id="groupStudentView"> 
      <button onclick="studyGroupAction('create')">Create Study Group</button> 
      <button onclick="studyGroupAction('search')">Look for Study Group</button> 
+     <button onclick="studyGroupAction('my')">My Posted Study Groups</button>
    </div> 
    <div id="groupAdminView"> 
      <button onclick="displayAllGroupsAdmin()">View All Groups</button> 
+     <button onclick="displayPendingGroupsAdmin()">Pending Study Groups</button>
+
    </div> 
    <div id="groupForm" class="hidden"> 
      <input id="groupCourse" placeholder="Course"> 
@@ -164,6 +167,7 @@
  <script src="app.js"></script> 
 </body> 
 </html>
+
 
 
 
