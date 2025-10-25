@@ -649,16 +649,18 @@ function displayMyItems() {
       }
     }
 
-    container.innerHTML += `
-      <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
-        <p><strong>Item:</strong> ${item.itemName}</p>
-        <p><strong>Price:</strong> R${item.itemPrice}</p>
-        <p><strong>Location:</strong> ${item.location}</p>
-        <p><strong>Contact:</strong> ${item.contact}</p>
-        <p><strong>Status:</strong> ${item.status}</p>
-        <button onclick="deleteMyItem(${item.id})">🗑️ Delete</button>
-      </div>
-    `;
+container.innerHTML += `
+  <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:10px;">
+    <p><strong>Item:</strong> ${item.itemName}</p>
+    <p><strong>Price:</strong> R${item.itemPrice}</p>
+    <p><strong>Location:</strong> ${item.location}</p>
+    <p><strong>Contact:</strong> ${item.contact}</p>
+    <p><strong>Status:</strong> ${item.status}</p>
+    ${item.status === "Rejected" && item.adminNote ? `<p><strong>Reason:</strong> ${item.adminNote}</p>` : ""}
+    <button onclick="deleteMyItem(${item.id})">🗑️ Delete</button>
+  </div>
+`;
+
   });
 }
 
@@ -697,6 +699,7 @@ function displayApprovedItems() {
     `;
   });
 }
+
 
 
 
