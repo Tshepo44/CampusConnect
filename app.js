@@ -24,12 +24,25 @@ function logout() {
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   document.getElementById("home").classList.remove("hidden");
   document.getElementById("logoutBtn").classList.add("hidden");
+  
 
 
 }
 
 // ---------------------- LOGIN ----------------------
-  document.getElementById("loginBtn").onclick = login;
+
+// Default admin account
+const adminAccount = { username: "admin", password: "admin123" };
+
+// Default student list (if none exist in localStorage)
+if (!localStorage.getItem("students")) {
+  const defaultStudents = [
+    { studentNumber: "2025001", password: "pass1" },
+    { studentNumber: "2025002", password: "pass2" },
+    { studentNumber: "2025003", password: "pass3" }
+  ];
+  localStorage.setItem("students", JSON.stringify(defaultStudents));
+}
 
 function login(role) {
   if (role === "student") {
@@ -57,8 +70,10 @@ function login(role) {
       alert("❌ Invalid admin credentials!");
     }
   }
+}
 
-  document.getElementById("logoutBtn").classList.remove("hidden");
+
+  
 }
 
 // ---------------------- SHOW SERVICES ----------------------
@@ -978,6 +993,7 @@ function logout() {
   // Reload page to reset everything
   location.reload();
 }
+
 
 
 
