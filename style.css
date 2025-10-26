@@ -9,7 +9,10 @@ body {
 /* === Landing Page === */
 #landing-page {
   text-align: center;
-  background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+    background: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")
+    center center/cover no-repeat;
   color: white;
   height: 100vh; /* full screen height */
   display: flex;
@@ -153,6 +156,7 @@ footer {
 .hidden {
   display: none;
 }
+
 
 
 
