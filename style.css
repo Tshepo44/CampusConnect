@@ -11,15 +11,34 @@ body {
   text-align: center;
   background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
   color: white;
-  height: 100vh;
+  height: 100vh; /* full screen height */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  overflow: hidden;
+  justify-content: center; /* centers everything vertically */
+  align-items: center; /* centers horizontally */
+  overflow: hidden; /* removes scroll */
   box-sizing: border-box;
   padding: 20px 10px;
 }
+.intro {
+  max-width: 600px;
+  margin: 10px auto 20px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+footer {
+  margin-top: 15px;
+  font-size: 0.85rem;
+}
+
 
 
 .landing-header h1 {
@@ -134,6 +153,7 @@ footer {
 .hidden {
   display: none;
 }
+
 
 
 
