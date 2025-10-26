@@ -1,3 +1,47 @@
+function showMessage(msg) {
+  // Create a small popup div
+  const div = document.createElement('div');
+  div.textContent = msg;
+  div.style.position = 'fixed';
+  div.style.top = '20px';
+  div.style.right = '20px';
+  div.style.background = '#28a745'; // green for success
+  div.style.color = 'white';
+  div.style.padding = '10px 15px';
+  div.style.borderRadius = '5px';
+  div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+  div.style.zIndex = 1000;
+
+  document.body.appendChild(div);
+
+  setTimeout(() => {
+    div.remove();
+  }, 2000); // disappears after 2 seconds
+}
+
+function showError(msg) {
+  const div = document.createElement('div');
+  div.textContent = msg;
+  div.style.position = 'fixed';
+  div.style.top = '20px';
+  div.style.right = '20px';
+  div.style.background = '#dc3545'; // red for error
+  div.style.color = 'white';
+  div.style.padding = '10px 15px';
+  div.style.borderRadius = '5px';
+  div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+  div.style.zIndex = 1000;
+
+  document.body.appendChild(div);
+
+  setTimeout(() => {
+    div.remove();
+  }, 2000); // disappears after 2 seconds
+}
+
+
+
+
 let loggedIn = false;
 
 function login(role) {
@@ -5,27 +49,82 @@ function login(role) {
     const studentNumber = document.getElementById("studentNumber").value;
     const password = document.getElementById("password").value;
 
-    if (studentNumber && password) {
-      loggedIn = true;
-      document.getElementById("landing-page").classList.add("hidden");
-      document.getElementById("student-dashboard").classList.remove("hidden");
+    if (studentNumber === "student123" && password === "pass123") {
+      showMessage("Successfully logged in!");
+      showStudentHome();
     } else {
-      alert("Please enter both Student Number and Password.");
+      showError("Wrong details!");
     }
+
   } else if (role === "admin") {
     const username = document.getElementById("adminUsername").value;
     const password = document.getElementById("adminPassword").value;
 
-    if (username && password) {
-      loggedIn = true;
-      document.getElementById("landing-page").classList.add("hidden");
-      document.getElementById("student-dashboard").classList.remove("hidden");
-      alert("Welcome, Admin!");
+    if (username === "admin" && password === "admin123") {
+      showMessage("Successfully logged in!");
+      showAdminHome();
     } else {
-      alert("Please enter both Username and Password.");
+      showError("Wrong details!");
     }
   }
 }
+
+function createOption(title) {
+  const container = document.createElement("div");
+  container.style.margin = "15px 0";
+  container.style.fontSize = "1.2rem";
+
+  const text = document.createElement("span");
+  text.textContent = title;
+  container.appendChild(text);
+
+  const logoutBtn = document.createElement("button");
+  logoutBtn.textContent = "Logout";
+  logoutBtn.style.marginLeft = "10px";
+  logoutBtn.onclick = () => {
+    if (confirm("Are you sure you want to logout?")) {
+      location.reload(); // reloads page to go back to login
+    }
+  };
+
+  container.appendChild(logoutBtn);
+
+  return container;
+}
+
+function showStudentHome() {
+  document.getElementById("landing-page").style.display = "none";
+
+  const dashboard = document.createElement("div");
+  dashboard.id = "student-home";
+  dashboard.style.textAlign = "center";
+  dashboard.style.marginTop = "50px";
+
+  const options = ["Tutor Request", "Counselling Request", "Marketplace", "Study Group"];
+  options.forEach(opt => {
+    dashboard.appendChild(createOption(opt));
+  });
+
+  document.body.appendChild(dashboard);
+}
+
+function showAdminHome() {
+  document.getElementById("landing-page").style.display = "none";
+
+  const dashboard = document.createElement("div");
+  dashboard.id = "admin-home";
+  dashboard.style.textAlign = "center";
+  dashboard.style.marginTop = "50px";
+
+  const options = ["Tutor Request", "Counselling Request", "Marketplace", "Study Group"];
+  options.forEach(opt => {
+    dashboard.appendChild(createOption(opt));
+  });
+
+  document.body.appendChild(dashboard);
+}
+
+
 
 /* === Functional Sections === */
 function showAddTutor() {
@@ -87,6 +186,7 @@ function addCounsellor() {
     document.getElementById("counsellorList").appendChild(div);
   }
 }
+
 
 
 
