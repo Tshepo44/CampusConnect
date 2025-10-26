@@ -1,36 +1,136 @@
-body { 
-  font-family: Arial, sans-serif; 
-  margin: 0; 
-  background: #f2f2f2; 
-} 
-header { 
-  background: #0066cc; 
-  color: white; 
-  padding: 15px; 
-  text-align: center; 
-} 
-nav a { 
-  margin: 0 10px; 
-  color: white; 
-  text-decoration: none; 
-} 
-section { 
-  padding: 20px; 
-  background: white; 
-  margin: 10px; 
-  border-radius: 8px; 
-} 
-.hidden { 
-  display: none; 
-} 
-button { 
-  padding: 8px 12px; 
-  margin-top: 5px; 
-  background: #0066cc; 
-  color: white; 
-  border: none; 
-  border-radius: 5px; 
+/* === General Styling === */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  background: #f5f7fb;
+  color: #333;
 }
+
+/* === Landing Page === */
+#landing-page {
+  text-align: center;
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.landing-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.intro {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* === Login Cards === */
+.login-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.login-card {
+  background: white;
+  color: #333;
+  border-radius: 10px;
+  padding: 25px;
+  width: 280px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-card h2 {
+  color: #007bff;
+}
+
+.login-card input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.login-card button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-card button:hover {
+  background: #0056b3;
+}
+
+/* === Dashboard Styling === */
+header {
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+section {
+  padding: 20px;
+  background: white;
+  margin: 15px auto;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  padding: 8px 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* === Footer === */
+footer {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* === Hidden Utility === */
+.hidden {
+  display: none;
+}
+
 
 
 
