@@ -9,14 +9,18 @@ body {
 /* === Landing Page === */
 #landing-page {
   text-align: center;
-  padding: 50px 20px;
   background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
   color: white;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 20px 10px;
 }
+
 
 .landing-header h1 {
   font-size: 2.8rem;
@@ -130,6 +134,7 @@ footer {
 .hidden {
   display: none;
 }
+
 
 
 
