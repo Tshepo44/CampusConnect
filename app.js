@@ -24,11 +24,13 @@ function logout() {
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   document.getElementById("home").classList.remove("hidden");
   document.getElementById("logoutBtn").classList.add("hidden");
-  document.getElementById("loginBtn").onclick = login;
+
 
 }
 
 // ---------------------- LOGIN ----------------------
+  document.getElementById("loginBtn").onclick = login;
+
 function login(role) {
   if (role === "student") {
     const sn = document.getElementById("studentNumber").value.trim();
@@ -976,6 +978,7 @@ function logout() {
   // Reload page to reset everything
   location.reload();
 }
+
 
 
 
