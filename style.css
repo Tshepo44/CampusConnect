@@ -157,6 +157,12 @@ footer {
   display: none;
 }
 
+#student-dashboard {
+  text-align: center;
+  padding: 0;
+  background: #fff;
+}
+
 
 #student-dashboard header h1 {
   position: absolute;
@@ -181,12 +187,9 @@ footer {
 #student-dashboard {
   background: #fff;
   text-align: center;
-  min-height: 100vh; /* full screen */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* centers the grid vertically */
-  align-items: center;
+  min-height: 100vh;
 }
+
 
 
 .dashboard-header {
@@ -215,14 +218,13 @@ footer {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  grid-template-rows: repeat(2, 1fr);    /* 2 rows */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
   width: 90%;
   max-width: 1200px;
-  height: calc(100vh - 150px); /* full screen minus header */
-  margin: 0 auto;
+  margin: 0 auto 50px;
 }
+
 
 
 .card {
@@ -239,9 +241,10 @@ footer {
 
 .card img {
   width: 100%;
-  height: 60%; /* 60% of card height */
+  height: 200px;
   object-fit: cover;
 }
+
 
 
 .card h3 {
@@ -257,6 +260,7 @@ footer {
     height: auto;                 /* allow scrolling on small screens */
   }
 }
+
 
 
 
