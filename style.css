@@ -159,15 +159,30 @@ footer {
 
 #student-dashboard {
   text-align: center;
-  padding: 40px 20px;
+  padding: 0;
   background: #fff;
 }
 
 #student-dashboard header h1 {
-  font-size: 2.2rem;
-  color: #007bff;
-  margin-bottom: 20px;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2.8rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
+
+.dashboard-container img {
+  width: 100%;
+  max-width: 1200px;
+  display: block;
+  margin: auto;
+  border-radius: 0;
+}
+
+
 
 
 
