@@ -157,12 +157,6 @@ footer {
   display: none;
 }
 
-#student-dashboard {
-  text-align: center;
-  padding: 0;
-  background: #fff;
-}
-
 
 #student-dashboard header h1 {
   position: absolute;
@@ -272,6 +266,7 @@ footer {
     height: auto;                 /* allow scrolling on small screens */
   }
 }
+
 
 
 
