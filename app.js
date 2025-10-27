@@ -93,35 +93,16 @@ function createOption(title) {
 }
 
 function showStudentHome() {
-  document.getElementById("landing-page").style.display = "none";
 
-  const dashboard = document.createElement("div");
-  dashboard.id = "student-home";
-  dashboard.style.textAlign = "center";
-  dashboard.style.marginTop = "50px";
+    document.getElementById("landing-page").style.display = "none";
+  document.getElementById("student-dashboard").style.display = "block";
 
-  const options = ["Tutor Request", "Counselling Request", "Marketplace", "Study Group"];
-  options.forEach(opt => {
-    dashboard.appendChild(createOption(opt));
-  });
-
-  document.body.appendChild(dashboard);
 }
 
 function showAdminHome() {
-  document.getElementById("landing-page").style.display = "none";
 
-  const dashboard = document.createElement("div");
-  dashboard.id = "admin-home";
-  dashboard.style.textAlign = "center";
-  dashboard.style.marginTop = "50px";
-
-  const options = ["Tutor Request", "Counselling Request", "Marketplace", "Study Group"];
-  options.forEach(opt => {
-    dashboard.appendChild(createOption(opt));
-  });
-
-  document.body.appendChild(dashboard);
+    document.getElementById("landing-page").style.display = "none";
+  document.getElementById("admin-dashboard").style.display = "block";
 }
 
 
@@ -186,6 +167,7 @@ function addCounsellor() {
     document.getElementById("counsellorList").appendChild(div);
   }
 }
+
 
 
 
