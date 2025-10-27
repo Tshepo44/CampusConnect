@@ -182,6 +182,71 @@ footer {
   border-radius: 0;
 }
 
+/* === Dashboard Layout === */
+#student-dashboard {
+  background: #fff;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  position: relative;
+  background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80") center center/cover no-repeat;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.announcements {
+  margin: 30px auto;
+  font-size: 1.2rem;
+  width: 90%;
+  max-width: 1200px;
+  text-align: left;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto 50px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card h3 {
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+
 
 
 
