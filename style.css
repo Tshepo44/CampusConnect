@@ -157,11 +157,6 @@ footer {
   display: none;
 }
 
-#student-dashboard {
-  text-align: center;
-  padding: 0;
-  background: #fff;
-}
 
 #student-dashboard header h1 {
   position: absolute;
@@ -186,8 +181,13 @@ footer {
 #student-dashboard {
   background: #fff;
   text-align: center;
-  min-height: 100vh;
+  min-height: 100vh; /* full screen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centers the grid vertically */
+  align-items: center;
 }
+
 
 .dashboard-header {
   position: relative;
@@ -205,7 +205,7 @@ footer {
   font-weight: bold;
 }
 
-.announcements {
+.Support Hub {
   margin: 30px auto;
   font-size: 1.2rem;
   width: 90%;
@@ -215,12 +215,15 @@ footer {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-rows: repeat(2, 1fr);    /* 2 rows */
   gap: 25px;
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto 50px;
+  height: calc(100vh - 150px); /* full screen minus header */
+  margin: 0 auto;
 }
+
 
 .card {
   background: #fff;
@@ -236,14 +239,23 @@ footer {
 
 .card img {
   width: 100%;
-  height: 200px;
+  height: 60%; /* 60% of card height */
   object-fit: cover;
 }
+
 
 .card h3 {
   padding: 15px;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+  .card-container {
+    grid-template-columns: 1fr;   /* stack cards vertically */
+    grid-template-rows: repeat(4, 1fr);
+    height: auto;                 /* allow scrolling on small screens */
+  }
 }
 
 
