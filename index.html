@@ -80,12 +80,25 @@
   </div>
 </section>
 
+<script>
+  // Get references to elements 
+  const loginBtn = document.getElementById('student-login-btn'); 
+  const landingPage = document.getElementById('landing-page'); 
+  const dashboard = document.getElementById('student-dashboard');
+
+  // Show dashboard and hide landing page when login button is clicked 
+  loginBtn.addEventListener('click', function() { 
+    landingPage.style.display = 'none'; // hide login page 
+    dashboard.style.display = 'flex';    // show dashboard 
+  }); 
+</script>
 
 
 
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
 
