@@ -102,7 +102,7 @@ function showStudentHome() {
 function showAdminHome() {
 
     document.getElementById("landing-page").style.display = "none";
-   document.getElementById("student-dashboard").style.display = "flex"; // ✅ show the same dashboard
+    document.getElementById("admin-dashboard").style.display = "block"; // ❌ remove this
 }
 }
 
@@ -168,6 +168,7 @@ function addCounsellor() {
     document.getElementById("counsellorList").appendChild(div);
   }
 }
+
 
 
 
