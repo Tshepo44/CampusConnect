@@ -62,7 +62,7 @@ function login(role) {
 
     if (username === "admin" && password === "admin123") {
       showMessage("Successfully logged in!");
-      showAdminHome();
+      showStudentHome(); // ✅ use student home layout
     } else {
       showError("Wrong details!");
     }
@@ -98,14 +98,7 @@ function showStudentHome() {
   document.getElementById("student-dashboard").style.display = "block";
 
 }
-
-function showAdminHome() {
-
-    document.getElementById("landing-page").style.display = "none";
-    document.getElementById("admin-dashboard").style.display = "block"; // ❌ remove this
 }
-}
-
 
 
 /* === Functional Sections === */
@@ -168,6 +161,7 @@ function addCounsellor() {
     document.getElementById("counsellorList").appendChild(div);
   }
 }
+
 
 
 
