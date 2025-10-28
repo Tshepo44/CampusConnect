@@ -98,7 +98,7 @@ function showStudentHome() {
   document.getElementById("student-dashboard").style.display = "block";
 
 }
-}
+
 
 
 /* === Functional Sections === */
@@ -161,6 +161,7 @@ function addCounsellor() {
     document.getElementById("counsellorList").appendChild(div);
   }
 }
+
 
 
 
