@@ -328,39 +328,45 @@ align-items: center;
 
 }  
 
-.dashboard-header {  
+/* === Dashboard Header Layout === */
+.dashboard-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between; /* spread title and icons */
+  align-items: center;
+  background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")
+    center center/cover no-repeat;
+  height: 180px;
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 10px;
+  color: white;
+  padding: 0 30px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
 
-position: relative;  
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
 
-background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")  
+.header-right {
+  display: flex;
+  gap: 15px;
+  font-size: 1.5rem;
+}
 
-center center/cover no-repeat;  
+.header-right .icon {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-height:180px;  
+.header-right .icon:hover {
+  transform: scale(1.2);
+}
+  
 
-width: 90%;  
-
-display: flex;  
-
-justify-content: center;  
-
-align-items: center;  
-
-color: white;  
-
-text-shadow: 2px 2px 6px rgba(0,0,0,0.6);  
-
-}  
-
-.dashboard-header h1 {  
-
-font-size: 2.5rem;  
-
-font-weight: bold;  
-
-}  
-
-.Support Hub {  
+.support-hub {
 
 margin: 30px auto;  
 
@@ -455,6 +461,7 @@ height: auto; /* allow scrolling on small screens */
 }  
 
 }
+
 
 
 
