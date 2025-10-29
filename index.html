@@ -1,98 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campus Connect</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+<!DOCTYPE html> 
 
-  <!-- ====== Landing Page / Cover Page ====== -->
-  <section id="landing-page">
-    <header class="landing-header">
-      <h1>Campus Connect</h1>
-      <p class="copyright">© 2025 Campus Connect | Built for Students - Tshepo Napo</p>
-      <p class="tagline">Connect, learn, trade, and grow — your complete student platform in one place.</p>
-    </header>
+<html lang="en"> 
 
-    <div class="intro">
-      <p>
-        Welcome to <strong>Campus Connect</strong> — your all-in-one campus hub to request tutors, trade items,
-        form study groups, and access academic or personal counselling, under administrator supervision.
-      </p>
-    </div>
+<head> 
 
-    <div class="login-container">
-      <!-- Student Login -->
-      <div class="login-card">
-        <h2>Student Login</h2>
-        <input id="studentNumber" placeholder="Student Number" />
-        <input id="password" type="password" placeholder="Password" />
-        <button onclick="login('student')">Login as Student</button>
-      </div>
+  <meta charset="UTF-8" /> 
 
-      <!-- Admin Login -->
-      <div class="login-card">
-        <h2>Admin Login</h2>
-        <input id="adminUsername" placeholder="Username" />
-        <input id="adminPassword" type="password" placeholder="Password" />
-        <button onclick="login('admin')">Login as Admin</button>
-      </div>
-    </div>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
 
-    <footer>
-      <p>© 2025 Campus Connect | Designed and Developed by Tshepo Napo</p>
-    </footer>
-  </section>
+  <title>Campus Connect</title> 
 
-<!-- ====== Student/Admin Dashboard ====== -->
-<section id="student-dashboard" class="hidden">
-  <header class="dashboard-header">
-    <h1>Welcome To Campus Connect</h1>
-  </header>
+  <link rel="stylesheet" href="style.css" /> 
 
-    <div class="right-icons">
-    <div class="profile-container">👤</div> <!-- your profile icon -->
-    <div class="notification">🔔</div>       <!-- your bell icon -->
-    <div class="menu-dots">⋮⋮</div>           <!-- 3-dot menu -->
-  </div>
-</div>
+</head> 
+
+<body> 
+
+  
+
+  <!-- ====== Landing Page / Cover Page ====== --> 
+
+  <section id="landing-page"> 
+
+    <header class="landing-header"> 
+
+      <h1>Campus Connect</h1> 
+
+      <p class="copyright">© 2025 Campus Connect | Built for Students - Tshepo Napo</p> 
+
+      <p class="tagline">Connect, learn, trade, and grow — your complete student platform in one place.</p> 
+
+    </header> 
+
+  
+
+    <div class="intro"> 
+
+      <p> 
+
+        Welcome to <strong>Campus Connect</strong> — your all-in-one campus hub to request tutors, trade items, 
+
+        form study groups, and access academic or personal counselling, under administrator supervision. 
+
+      </p> 
+
+    </div> 
+
+  
+
+    <div class="login-container"> 
+
+      <!-- Student Login --> 
+
+      <div class="login-card"> 
+
+        <h2>Student Login</h2> 
+
+        <input id="studentNumber" placeholder="Student Number" /> 
+
+        <input id="password" type="password" placeholder="Password" /> 
+
+        <button onclick="login('student')">Login as Student</button> 
+
+      </div> 
+
+  
+
+      <!-- Admin Login --> 
+
+      <div class="login-card"> 
+
+        <h2>Admin Login</h2> 
+
+        <input id="adminUsername" placeholder="Username" /> 
+
+        <input id="adminPassword" type="password" placeholder="Password" /> 
+
+        <button onclick="login('admin')">Login as Admin</button> 
+
+      </div> 
+
+    </div> 
+
+  
+
+    <footer> 
+
+      <p>© 2025 Campus Connect | Designed and Developed by Tshepo Napo</p> 
+
+    </footer> 
+
+  </section> 
+
+  
+
+<!-- ====== Student/Admin Dashboard ====== --> 
+
+<section id="student-dashboard" class="hidden"> 
+
+  <header class="dashboard-header"> 
+
+    <h1>Welcome To Campus Connect</h1> 
+
+  </header> 
+
+  
+
+  <div class="Support Hub"> 
+
+    <h2>Support Hub</h2> 
+
+  </div> 
+
+  
+
+  <div class="card-container"> 
+
+    <div class="card"> 
+
+      <img src="https://d2zp5xs5cp8zlg.cloudfront.net/image-35069-800.jpg" alt="Tutor Request"> 
+
+      <h3>Tutor Request</h3> 
+
+    </div> 
+
+  
+
+    <div class="card"> 
+
+      <img src="https://cdn.pixabay.com/photo/2025/05/16/10/55/ai-generated-9603565_1280.jpg" alt="Counselling Request"> 
+
+      <h3>Counselling Request</h3> 
+
+    </div> 
+
+  
+
+    <div class="card"> 
+
+      <img src="https://img.freepik.com/premium-photo/diverse-group-students-studying-together-university-classroom_1274293-712.jpg" 
+
+        alt="Study Group"> 
+
+      <h3>Study Group</h3> 
+
+    </div> 
+
+  
+
+    <div class="card"> 
+
+      <img src="https://img.freepik.com/premium-photo/shopping-cart-filled-with-back-school-supplies_1268500-8653.jpg" alt="Marketplace"> 
+
+      <h3>Marketplace</h3> 
+
+    </div> 
+
+  </div> 
+
+</section> 
 
 
-  <div class="Support Hub">
-    <h2>Support Hub</h2>
-  </div>
+  
 
-  <div class="card-container">
-    <div class="card">
-      <img src="https://d2zp5xs5cp8zlg.cloudfront.net/image-35069-800.jpg" alt="Tutor Request">
-      <h3>Tutor Request</h3>
-    </div>
+  <script src="app.js"></script> 
 
-    <div class="card">
-      <img src="https://cdn.pixabay.com/photo/2025/05/16/10/55/ai-generated-9603565_1280.jpg" alt="Counselling Request">
-      <h3>Counselling Request</h3>
-    </div>
+</body> 
 
-    <div class="card">
-      <img src="https://img.freepik.com/premium-photo/diverse-group-students-studying-together-university-classroom_1274293-712.jpg"
-        alt="Study Group">
-      <h3>Study Group</h3>
-    </div>
-
-    <div class="card">
-      <img src="https://img.freepik.com/premium-photo/shopping-cart-filled-with-back-school-supplies_1268500-8653.jpg" alt="Marketplace">
-      <h3>Marketplace</h3>
-    </div>
-  </div>
-</section>
-
-
-
-  <script src="app.js"></script>
-</body>
 </html>
+
 
 
 
