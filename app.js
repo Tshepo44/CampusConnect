@@ -163,6 +163,25 @@ function addCounsellor() {
 }
 
 
+function logout() {
+  if (confirm("Are you sure you want to logout?")) {
+    location.reload();
+  }
+}
+
+// Toggle profile dropdown when profile picture is clicked
+document.addEventListener("click", function (e) {
+  const profile = document.querySelector(".profile-container");
+  const dropdown = document.querySelector(".profile-dropdown");
+
+  if (profile.contains(e.target)) {
+    dropdown.classList.toggle("hidden");
+  } else {
+    dropdown.classList.add("hidden");
+  }
+});
+
+
 
 
 
