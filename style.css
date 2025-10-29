@@ -262,15 +262,6 @@ footer {
   font-weight: 600;
 }
 
-/* === TOP BAR ICONS === */
-.top-bar {
-  position: absolute;
-  top: 15px;
-  right: 25px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
 
 /* Three-dot grid */
 .menu-dots {
@@ -336,6 +327,48 @@ footer {
   background: #b02a37;
 }
 
+.header-container {
+  display: flex;           /* header + icons side by side */
+  width: 100%;
+  align-items: center;     /* vertical alignment */
+  justify-content: center; /* keeps welcome message centered in 90% */
+  gap: 10px;               /* small gap between header and icons */
+}
+.right-icons {
+  width: 10%;                  /* remaining space */
+  display: flex;
+  flex-direction: column;       /* stack vertically */
+  align-items: center;          /* center horizontally in that 10% */
+  justify-content: center;      /* center vertically */
+  gap: 15px;                    /* space between icons */
+}
+.right-icons .notification {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.right-icons .menu-dots {
+  display: grid;
+  grid-template-columns: repeat(3, 5px);
+  grid-gap: 4px;
+  cursor: pointer;
+}
+
+.right-icons .menu-dots .dot {
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+}
+
+.right-icons .profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
 
 
 @media screen and (max-width: 768px) {
@@ -345,6 +378,7 @@ footer {
     height: auto;                 /* allow scrolling on small screens */
   }
 }
+
 
 
 
