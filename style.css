@@ -262,6 +262,82 @@ footer {
   font-weight: 600;
 }
 
+/* === TOP BAR ICONS === */
+.top-bar {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Three-dot grid */
+.menu-dots {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  grid-gap: 4px;
+  cursor: pointer;
+}
+.menu-dots .dot {
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+}
+
+/* Notification Bell */
+.notification {
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* Profile Circle */
+.profile-container {
+  position: relative;
+  cursor: pointer;
+}
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Dropdown Menu */
+.profile-dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: white;
+  color: #333;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  min-width: 120px;
+  text-align: left;
+  z-index: 2000;
+}
+.profile-dropdown p {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.profile-dropdown button {
+  background: #dc3545;
+  color: white;
+  width: 100%;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.profile-dropdown button:hover {
+  background: #b02a37;
+}
+
+
+
 @media screen and (max-width: 768px) {
   .card-container {
     grid-template-columns: 1fr;   /* stack cards vertically */
@@ -269,6 +345,7 @@ footer {
     height: auto;                 /* allow scrolling on small screens */
   }
 }
+
 
 
 
