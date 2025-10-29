@@ -1,383 +1,461 @@
-/* === General Styling === */
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  background: #f5f7fb;
-  color: #333;
+/* === General Styling === */  
+
+body {  
+
+font-family: 'Segoe UI', Arial, sans-serif;  
+
+margin: 0;  
+
+background: #f5f7fb;  
+
+color: #333;  
+
+}  
+
+/* === Landing Page === */  
+
+#landing-page {  
+
+text-align: center;  
+
+background:  
+
+linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  
+
+url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")  
+
+center center/cover no-repeat;  
+
+color: white;  
+
+height: 100vh; /* full screen height */  
+
+display: flex;  
+
+flex-direction: column;  
+
+justify-content: center; /* centers everything vertically */  
+
+align-items: center; /* centers horizontally */  
+
+overflow: hidden; /* removes scroll */  
+
+box-sizing: border-box;  
+
+padding: 20px 10px;  
+
+}  
+
+.intro {  
+
+max-width: 600px;  
+
+margin: 10px auto 20px;  
+
+}  
+
+.login-container {  
+
+display: flex;  
+
+justify-content: center;  
+
+align-items: center;  
+
+gap: 30px;  
+
+flex-wrap: wrap;  
+
+margin-top: 20px;  
+
+}  
+
+footer {  
+
+margin-top: 15px;  
+
+font-size: 0.85rem;  
+
+}  
+
+.landing-header h1 {  
+
+font-size: 2.8rem;  
+
+margin-bottom: 10px;  
+
+}  
+
+.tagline {  
+
+font-size: 1.1rem;  
+
+margin-bottom: 30px;  
+
+font-style: italic;  
+
+}  
+
+.intro {  
+
+max-width: 600px;  
+
+margin: 0 auto 40px;  
+
+font-size: 1.1rem;  
+
+line-height: 1.6;  
+
+}  
+
+/* === Login Cards === */  
+
+.login-container {  
+
+display: flex;  
+
+flex-wrap: wrap;  
+
+justify-content: center;  
+
+gap: 25px;  
+
+}  
+
+.login-card {  
+
+background: white;  
+
+color: #333;  
+
+border-radius: 10px;  
+
+padding: 25px;  
+
+width: 280px;  
+
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+
+}  
+
+.login-card h2 {  
+
+color: #007bff;  
+
+}  
+
+.login-card input {  
+
+display: block;  
+
+width: 100%;  
+
+padding: 10px;  
+
+margin: 8px 0;  
+
+border: 1px solid #ddd;  
+
+border-radius: 5px;  
+
+}  
+
+.login-card button {  
+
+background: #007bff;  
+
+color: white;  
+
+border: none;  
+
+padding: 10px;  
+
+width: 100%;  
+
+border-radius: 5px;  
+
+cursor: pointer;  
+
+font-weight: bold;  
+
+}  
+
+.login-card button:hover {  
+
+background: #0056b3;  
+
+}  
+
+/* === Dashboard Styling === */  
+
+header {  
+
+background: #007bff;  
+
+color: white;  
+
+padding: 15px;  
+
+text-align: center;  
+
+}  
+
+nav a {  
+
+margin: 0 10px;  
+
+color: white;  
+
+text-decoration: none;  
+
+font-weight: 500;  
+
+}  
+
+section {  
+
+padding: 20px;  
+
+background: white;  
+
+margin: 15px auto;  
+
+width: 90%;  
+
+max-width: 800px;  
+
+border-radius: 8px;  
+
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  
+
+}  
+
+button {  
+
+padding: 8px 12px;  
+
+background: #007bff;  
+
+color: white;  
+
+border: none;  
+
+border-radius: 5px;  
+
+margin-top: 5px;  
+
+}  
+
+button:hover {  
+
+background: #0056b3;  
+
+}  
+
+/* === Footer === */  
+
+footer {  
+
+margin-top: 40px;  
+
+font-size: 0.9rem;  
+
+opacity: 0.9;  
+
+}  
+
+/* === Hidden Utility === */  
+
+.hidden {  
+
+display: none;  
+
+}  
+
+#student-dashboard header h1 {  
+
+position: absolute;  
+
+top: 30%;  
+
+left: 50%;  
+
+transform: translate(-50%, -50%);  
+
+color: white;  
+
+font-size: 2.8rem;  
+
+font-weight: bold;  
+
+text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  
+
+}  
+
+.dashboard-container img {  
+
+width: 100%;  
+
+max-width: 1200px;  
+
+display: block;  
+
+margin: auto;  
+
+border-radius: 0;  
+
+}  
+
+/* === Dashboard Layout === */  
+
+#student-dashboard {  
+
+background: #fff;  
+
+text-align: center;  
+
+min-height: 100vh;  
+
+/* ADD THIS */  
+
+display: none; /* hide dashboard initially */  
+
+flex-direction: column;  
+
+justify-content: center;  
+
+align-items: center;  
+
+}  
+
+.dashboard-header {  
+
+position: relative;  
+
+background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")  
+
+center center/cover no-repeat;  
+
+height:180px;  
+
+width: 90%;  
+
+display: flex;  
+
+justify-content: center;  
+
+align-items: center;  
+
+color: white;  
+
+text-shadow: 2px 2px 6px rgba(0,0,0,0.6);  
+
+}  
+
+.dashboard-header h1 {  
+
+font-size: 2.5rem;  
+
+font-weight: bold;  
+
+}  
+
+.Support Hub {  
+
+margin: 30px auto;  
+
+font-size: 1.2rem;  
+
+width: 90%;  
+
+max-width: 1200px;  
+
+text-align: left;  
+
+}  
+
+.card-container {  
+
+display: grid;  
+
+grid-template-columns: repeat(4, 1fr); /* 4 cards side by side */  
+
+gap: 20px;  
+
+width: 90%;  
+
+max-width: 1400px;  
+
+height: calc(100vh - 300px); /* fill remaining screen below header */  
+
+margin: 0 auto;  
+
+align-items: stretch;  
+
+}  
+
+.card {  
+
+background: #fff;  
+
+border-radius: 12px;  
+
+box-shadow: 0 4px 10px rgba(0,0,0,0.1);  
+
+overflow: hidden;  
+
+transition: transform 0.3s ease;  
+
+display: flex;  
+
+flex-direction: column;  
+
+justify-content: space-between;  
+
+height: 100%;  
+
+}  
+
+.card:hover {  
+
+transform: translateY(-5px);  
+
+}  
+
+.card img {  
+
+width: 100%;  
+
+height: 60%;  
+
+object-fit: cover;  
+
+}  
+
+.card h3 {  
+
+padding: 15px;  
+
+font-size: 1.2rem;  
+
+font-weight: 600;  
+
+}  
+
+@media screen and (max-width: 768px) {  
+
+.card-container {  
+
+grid-template-columns: 1fr; /* stack cards vertically */  
+
+grid-template-rows: repeat(4, 1fr);  
+
+height: auto; /* allow scrolling on small screens */  
+
+}  
+
 }
 
-/* === Landing Page === */
-#landing-page {
-  text-align: center;
-    background: 
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")
-    center center/cover no-repeat;
-  color: white;
-  height: 100vh; /* full screen height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* centers everything vertically */
-  align-items: center; /* centers horizontally */
-  overflow: hidden; /* removes scroll */
-  box-sizing: border-box;
-  padding: 20px 10px;
-}
-.intro {
-  max-width: 600px;
-  margin: 10px auto 20px;
-}
-
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-footer {
-  margin-top: 15px;
-  font-size: 0.85rem;
-}
-
-
-
-.landing-header h1 {
-  font-size: 2.8rem;
-  margin-bottom: 10px;
-}
-
-.tagline {
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-  font-style: italic;
-}
-
-.intro {
-  max-width: 600px;
-  margin: 0 auto 40px;
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-/* === Login Cards === */
-.login-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-}
-
-.login-card {
-  background: white;
-  color: #333;
-  border-radius: 10px;
-  padding: 25px;
-  width: 280px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-card h2 {
-  color: #007bff;
-}
-
-.login-card input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.login-card button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.login-card button:hover {
-  background: #0056b3;
-}
-
-/* === Dashboard Styling === */
-header {
-  background: #007bff;
-  color: white;
-  padding: 15px;
-  text-align: center;
-}
-
-nav a {
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-section {
-  padding: 20px;
-  background: white;
-  margin: 15px auto;
-  width: 90%;
-  max-width: 800px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-button {
-  padding: 8px 12px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: 5px;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-/* === Footer === */
-footer {
-  margin-top: 40px;
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-/* === Hidden Utility === */
-.hidden {
-  display: none;
-}
-
-
-#student-dashboard header h1 {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 2.8rem;
-  font-weight: bold;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-.dashboard-container img {
-  width: 100%;
-  max-width: 1200px;
-  display: block;
-  margin: auto;
-  border-radius: 0;
-}
-
-/* === Dashboard Layout === */
-#student-dashboard {
-  background: #fff;
-  text-align: center;
-  min-height: 100vh;
-
-  /* ADD THIS */
-  display: none;  /* hide dashboard initially */
-
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.dashboard-header {
-  position: relative;
-  background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80")
-  center center/cover no-repeat;
-  height:180px;
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-}
-
-.dashboard-header h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.Support Hub {
-  margin: 30px auto;
-  font-size: 1.2rem;
-  width: 90%;
-  max-width: 1200px;
-  text-align: left;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards side by side */
-  gap: 20px;
-  width: 90%;
-  max-width: 1400px;
-  height: calc(100vh - 300px); /* fill remaining screen below header */
-  margin: 0 auto;
-  align-items: stretch;
-}
-
-
-
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card img {
-  width: 100%;
-  height: 60%;
-  object-fit: cover;
-}
-
-
-
-.card h3 {
-  padding: 15px;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-
-/* Three-dot grid */
-.menu-dots {
-  display: grid;
-  grid-template-columns: repeat(3, 4px);
-  grid-gap: 4px;
-  cursor: pointer;
-}
-.menu-dots .dot {
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-}
-
-/* Notification Bell */
-.notification {
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: white;
-}
-
-/* Profile Circle */
-.profile-container {
-  position: relative;
-  cursor: pointer;
-}
-.profile-pic {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-/* Dropdown Menu */
-.profile-dropdown {
-  position: absolute;
-  top: 45px;
-  right: 0;
-  background: white;
-  color: #333;
-  border-radius: 6px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  min-width: 120px;
-  text-align: left;
-  z-index: 2000;
-}
-.profile-dropdown p {
-  margin: 0 0 8px;
-  font-weight: 600;
-}
-.profile-dropdown button {
-  background: #dc3545;
-  color: white;
-  width: 100%;
-  padding: 6px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.profile-dropdown button:hover {
-  background: #b02a37;
-}
-
-.header-container {
-  display: flex;           /* header + icons side by side */
-  width: 100%;
-  align-items: center;     /* vertical alignment */
-  justify-content: center; /* keeps welcome message centered in 90% */
-  gap: 10px;               /* small gap between header and icons */
-}
-.right-icons {
-  width: 10%;                  /* remaining space */
-  display: flex;
-  flex-direction: column;       /* stack vertically */
-  align-items: center;          /* center horizontally in that 10% */
-  justify-content: center;      /* center vertically */
-  gap: 15px;                    /* space between icons */
-}
-.right-icons .notification {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.right-icons .menu-dots {
-  display: grid;
-  grid-template-columns: repeat(3, 5px);
-  grid-gap: 4px;
-  cursor: pointer;
-}
-
-.right-icons .menu-dots .dot {
-  width: 5px;
-  height: 5px;
-  background: white;
-  border-radius: 50%;
-}
-
-.right-icons .profile-pic {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid white;
-  cursor: pointer;
-}
-
-
-
-@media screen and (max-width: 768px) {
-  .card-container {
-    grid-template-columns: 1fr;   /* stack cards vertically */
-    grid-template-rows: repeat(4, 1fr);
-    height: auto;                 /* allow scrolling on small screens */
-  }
-}
 
 
 
